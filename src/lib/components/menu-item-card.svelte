@@ -13,9 +13,9 @@
 </script>
 
 <div class="menu-row py-6 first:pt-0">
-	<div class="mb-2 flex items-baseline gap-4">
+	<div class="mb-2 flex flex-wrap items-baseline gap-x-4 gap-y-1">
 		<h4
-			class="font-heading flex flex-wrap items-baseline gap-3 text-lg tracking-[0.08em] whitespace-nowrap uppercase {item.isAvailable
+			class="font-heading min-w-0 text-lg tracking-[0.08em] uppercase {item.isAvailable
 				? 'text-cream'
 				: 'text-muted-foreground line-through'}"
 		>

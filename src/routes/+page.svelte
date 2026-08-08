@@ -64,7 +64,16 @@
 		</div>
 	</PageHero>
 {/if}
-
+{#if data.loungeGallery.length}
+	<section class="py-20">
+		<div class="container mx-auto px-4 sm:px-6">
+			<SectionHeading title="The room, after dark" subtitle="A look at Gifa once the lights go low." />
+		</div>
+		<div use:reveal={{ delay: 200, y: 40, duration: 1100 }} class="container mx-auto mt-12 px-4 sm:px-6">
+			<ImageGallery images={data.loungeGallery} label="The lounge at night" />
+		</div>
+	</section>
+{/if}
 <Marquee
 	items={[
 		'Halal kitchen',
@@ -163,6 +172,8 @@
 	</section>
 {/if}
 
+
+
 <!-- Coffee ceremony -->
 <section class="relative isolate overflow-hidden py-28">
 	<img
@@ -242,16 +253,7 @@
 	</section>
 {/if}
 
-{#if data.loungeGallery.length}
-	<section class="py-20">
-		<div class="container mx-auto px-4 sm:px-6">
-			<SectionHeading title="The room, after dark" subtitle="A look at Gifa once the lights go low." />
-		</div>
-		<div use:reveal={{ delay: 200, y: 40, duration: 1100 }} class="container mx-auto mt-12 px-4 sm:px-6">
-			<ImageGallery images={data.loungeGallery} label="The lounge at night" />
-		</div>
-	</section>
-{/if}
+
 
 {#if data.gallery.length}
 	<section class="atmosphere py-20">
