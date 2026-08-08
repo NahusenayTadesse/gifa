@@ -97,12 +97,12 @@
 		if (!lines.length) return;
 
 		// One nudge per browsing session, so returning visitors aren't nagged.
-		if (sessionStorage.getItem('fahem-chat-teased')) return;
+		if (sessionStorage.getItem('gifa-chat-teased')) return;
 
 		const timer = setTimeout(() => {
 			if (!open) {
 				teasing = true;
-				sessionStorage.setItem('fahem-chat-teased', '1');
+				sessionStorage.setItem('gifa-chat-teased', '1');
 			}
 		}, 6000);
 
