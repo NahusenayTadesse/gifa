@@ -1,0 +1,1 @@
+import{o as e,s as t}from"./B-rfjnbT.js";import"./xihTtKlq.js";import{t as n}from"./XNV03Wf2.js";var r=new Set([`$$slots`,`$$events`,`$$legacy`]);function i(i,a){let o=e(a,r),s=[[`path`,{d:`m7 15 5 5 5-5`}],[`path`,{d:`m7 9 5-5 5 5`}]];n(i,t({name:`chevrons-up-down`},()=>o,{get iconNode(){return s}}))}export{i as t};
