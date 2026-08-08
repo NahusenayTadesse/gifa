@@ -1,0 +1,2046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gifa Lounge — A Habesha table in West London</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #050303;
+    --deep: #0d0705;
+    --shadow: #180b08;
+    --burgundy: #3d1218;
+    --burgundy-glow: #6a1e2a;
+    --gold: #d4a344;
+    --gold-light: #f4d47c;
+    --gold-bright: #ffe08a;
+    --gold-shadow: #8b6420;
+    --gold-deep: #5a3f14;
+    --champagne: #ecd9a3;
+    --cream: #f0e4c5;
+    --ash: #6b5a48;
+
+    --f-display: 'Cinzel', 'Times New Roman', serif;
+    --f-italic: 'Cormorant Garamond', 'Times New Roman', serif;
+    --f-body: 'Cormorant Garamond', 'Times New Roman', serif;
+    --f-mono: 'Inter', -apple-system, sans-serif;
+
+    --gold-gradient: linear-gradient(135deg, #8b6420 0%, #d4a344 25%, #f4d47c 50%, #d4a344 75%, #8b6420 100%);
+    --gold-foil: linear-gradient(120deg, #8b6420 0%, #d4a344 20%, #ffe08a 40%, #f4d47c 50%, #ffe08a 60%, #d4a344 80%, #8b6420 100%);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--void);
+    color: var(--cream);
+    font-family: var(--f-body);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Grain / film noise overlay for atmosphere */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.83 0 0 0 0 0.64 0 0 0 0 0.27 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: overlay;
+  }
+
+  ::selection { background: var(--gold); color: var(--void); }
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 48px;
+    position: relative;
+    z-index: 2;
+  }
+  @media (max-width: 720px) { .wrap { padding: 0 24px; } }
+
+  /* ===================== ORNAMENTS ===================== */
+
+  /* Ornate divider with wine glass at center */
+  .divider-baroque {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 0;
+    gap: 24px;
+  }
+  .divider-baroque svg { flex-shrink: 0; }
+  .divider-line {
+    flex: 1;
+    max-width: 280px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold-light) 50%, var(--gold) 70%, transparent);
+  }
+  .divider-line.left { max-width: 280px; }
+
+  /* Section eyebrow */
+  .eyebrow {
+    font-family: var(--f-display);
+    font-size: 11px;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .eyebrow::before, .eyebrow::after {
+    content: '';
+    width: 44px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .eyebrow::after {
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .eyebrow.left::before { display: none; }
+
+  /* ===================== NAV ===================== */
+  nav.top {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 0;
+    background: linear-gradient(to bottom, rgba(5,3,3,0.92), rgba(5,3,3,0.72));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(212,163,68,0.14);
+  }
+  nav.top .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .mark {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .mark-glyph {
+    width: 44px; height: 44px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 26px;
+    color: var(--gold);
+    background: radial-gradient(circle, rgba(212,163,68,0.14), transparent 70%);
+    position: relative;
+  }
+  .mark-glyph::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 1px solid rgba(212,163,68,0.35);
+    border-radius: 50%;
+  }
+  .nav-links {
+    display: flex;
+    gap: 44px;
+    align-items: center;
+    font-family: var(--f-display);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .nav-links a {
+    color: var(--cream);
+    opacity: 0.75;
+    transition: opacity 0.2s, color 0.2s;
+    padding-bottom: 6px;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease, left 0.3s ease;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold-light); }
+  .nav-links a:hover::after { width: 100%; left: 0; }
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold) !important;
+    font-family: var(--f-display);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    font-weight: 600;
+    opacity: 1 !important;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .nav-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateY(101%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+  }
+  .nav-cta:hover { color: var(--void) !important; }
+  .nav-cta:hover::before { transform: translateY(0); }
+  .burger { display: none; background: none; border: none; color: var(--gold); cursor: pointer; padding: 8px; }
+  @media (max-width: 960px) {
+    .nav-links { display: none; }
+    .burger { display: block; }
+  }
+
+  /* ===================== HERO ===================== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    padding: 140px 0 100px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 900px 700px at 20% 30%, rgba(212,163,68,0.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 85% 75%, rgba(106,30,42,0.35), transparent 55%),
+      radial-gradient(ellipse 500px 400px at 50% 100%, rgba(212,163,68,0.10), transparent 60%),
+      linear-gradient(180deg, var(--deep) 0%, var(--void) 50%, var(--shadow) 100%);
+  }
+
+  /* Ornate corner ornaments in hero */
+  .hero-corner {
+    position: absolute;
+    color: var(--gold);
+    opacity: 0.55;
+    z-index: 3;
+  }
+  .hero-corner.tl { top: 100px; left: 40px; }
+  .hero-corner.tr { top: 100px; right: 40px; transform: scaleX(-1); }
+  .hero-corner.bl { bottom: 40px; left: 40px; transform: scaleY(-1); }
+  .hero-corner.br { bottom: 40px; right: 40px; transform: scale(-1); }
+  @media (max-width: 720px) {
+    .hero-corner { width: 60px; height: 60px; }
+    .hero-corner.tl, .hero-corner.tr { top: 90px; }
+  }
+
+  .hero-inner {
+    text-align: center;
+    position: relative;
+    z-index: 4;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .hero-crown {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--f-display);
+    font-size: 12px;
+    letter-spacing: 0.48em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 8px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .hero-eyebrow::after { background: linear-gradient(90deg, var(--gold), transparent); }
+
+  h1.hero-title {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(42px, 6.5vw, 96px);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    background: var(--gold-foil);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: shimmer 6s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .hero-italic {
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 4vw, 52px);
+    color: var(--champagne);
+    margin-bottom: 40px;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    -webkit-text-fill-color: var(--champagne);
+    background: none;
+  }
+
+  .hero-sub {
+    font-family: var(--f-body);
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--cream);
+    opacity: 0.82;
+    max-width: 620px;
+    margin: 0 auto 52px;
+    font-weight: 300;
+  }
+  .hero-sub em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+  }
+
+  .btn-gold {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 40px;
+    background: var(--gold-gradient);
+    background-size: 200% auto;
+    color: var(--void);
+    font-family: var(--f-display);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: background-position 0.6s ease, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 24px rgba(212,163,68,0.25);
+    position: relative;
+  }
+  .btn-gold:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(212,163,68,0.4);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 40px;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    font-family: var(--f-display);
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    cursor: pointer;
+  }
+  .btn-outline::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateY(101%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+  }
+  .btn-outline:hover { color: var(--void); }
+  .btn-outline:hover::before { transform: translateY(0); }
+
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(212,163,68,0.2);
+    flex-wrap: wrap;
+    font-family: var(--f-display);
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .hero-meta span { opacity: 0.8; }
+  .hero-meta .dot { color: var(--burgundy-glow); font-size: 6px; align-self: center; }
+
+  /* ===================== INTRO STRIP ===================== */
+  .intro-strip {
+    padding: 100px 0;
+    background: linear-gradient(180deg, var(--shadow) 0%, var(--void) 100%);
+    position: relative;
+    text-align: center;
+  }
+  .intro-strip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(212,163,68,0.06), transparent 70%);
+  }
+  .intro-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .intro-text {
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(24px, 3.4vw, 40px);
+    line-height: 1.4;
+    color: var(--champagne);
+    letter-spacing: 0.005em;
+    margin: 40px 0;
+  }
+  .intro-text .amp {
+    color: var(--gold);
+    font-weight: 400;
+  }
+  .intro-signature {
+    font-family: var(--f-display);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 32px;
+  }
+
+  /* ===================== SECTION BASE ===================== */
+  section {
+    padding: 140px 0;
+    position: relative;
+    z-index: 2;
+  }
+  @media (max-width: 720px) {
+    section { padding: 90px 0; }
+  }
+
+  .section-head {
+    text-align: center;
+    margin-bottom: 90px;
+  }
+  .section-head .eyebrow {
+    margin-bottom: 28px;
+  }
+  h2.section-title {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(38px, 5.5vw, 76px);
+    line-height: 1.05;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: 20px;
+  }
+  h2.section-title .italic {
+    font-family: var(--f-italic);
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0.005em;
+    display: block;
+    font-size: 0.85em;
+    margin-top: 8px;
+  }
+
+  /* ===================== SIGNATURE DISHES ===================== */
+  .signatures {
+    background:
+      radial-gradient(ellipse at 20% 40%, rgba(106,30,42,0.15), transparent 55%),
+      radial-gradient(ellipse at 80% 60%, rgba(212,163,68,0.08), transparent 55%),
+      var(--deep);
+  }
+  .sig-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+  }
+  @media (max-width: 900px) {
+    .sig-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  .sig-card {
+    background: linear-gradient(180deg, rgba(24,11,8,0.9), rgba(13,7,5,0.9));
+    border: 1px solid rgba(212,163,68,0.22);
+    padding: 8px;
+    position: relative;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+  }
+  .sig-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--gold);
+  }
+  .sig-card::before,
+  .sig-card::after {
+    content: '';
+    position: absolute;
+    width: 32px; height: 32px;
+    border: 1px solid var(--gold);
+    z-index: 3;
+  }
+  .sig-card::before {
+    top: -1px; left: -1px;
+    border-right: none; border-bottom: none;
+  }
+  .sig-card::after {
+    bottom: -1px; right: -1px;
+    border-left: none; border-top: none;
+  }
+
+  .sig-inner {
+    border: 1px solid rgba(212,163,68,0.18);
+    padding: 44px 32px 40px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at top, rgba(212,163,68,0.06), transparent 60%);
+  }
+  .sig-illustration {
+    height: 180px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .sig-num {
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .sig-name {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: 24px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+  .sig-native {
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--gold);
+    margin-bottom: 24px;
+    letter-spacing: 0.01em;
+  }
+  .sig-desc {
+    font-family: var(--f-body);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--cream);
+    opacity: 0.75;
+    margin-bottom: 28px;
+  }
+  .sig-price {
+    display: inline-block;
+    font-family: var(--f-display);
+    font-size: 14px;
+    letter-spacing: 0.24em;
+    color: var(--gold);
+    font-weight: 500;
+    padding: 12px 24px;
+    border: 1px solid var(--gold);
+    position: relative;
+  }
+  .sig-price::before,
+  .sig-price::after {
+    content: '❦';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 10px;
+  }
+  .sig-price::before { left: -18px; }
+  .sig-price::after { right: -18px; }
+
+  /* ===================== MENU FOLIO ===================== */
+  .menu-section {
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(212,163,68,0.10), transparent 60%),
+      radial-gradient(ellipse at 0% 100%, rgba(106,30,42,0.14), transparent 55%),
+      var(--void);
+    position: relative;
+  }
+
+  .folio {
+    max-width: 1100px;
+    margin: 0 auto;
+    background:
+      radial-gradient(ellipse at top, rgba(212,163,68,0.06), transparent 70%),
+      linear-gradient(180deg, var(--deep), var(--shadow));
+    border: 1px solid var(--gold);
+    padding: 20px;
+    position: relative;
+    box-shadow:
+      0 30px 80px rgba(0,0,0,0.6),
+      0 0 60px rgba(212,163,68,0.15) inset;
+  }
+  .folio::before,
+  .folio::after {
+    content: '';
+    position: absolute;
+    width: 60px; height: 60px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .folio::before {
+    top: -1px; left: -1px;
+    background:
+      linear-gradient(var(--gold), var(--gold)) top left / 100% 2px no-repeat,
+      linear-gradient(var(--gold), var(--gold)) top left / 2px 100% no-repeat;
+  }
+  .folio::after {
+    bottom: -1px; right: -1px;
+    background:
+      linear-gradient(var(--gold), var(--gold)) bottom right / 100% 2px no-repeat,
+      linear-gradient(var(--gold), var(--gold)) bottom right / 2px 100% no-repeat;
+  }
+
+  .folio-inner {
+    border: 1px solid rgba(212,163,68,0.35);
+    padding: 64px 60px;
+  }
+  @media (max-width: 720px) {
+    .folio-inner { padding: 48px 24px; }
+  }
+
+  .folio-title {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .folio-title h3 {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: 36px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .folio-title .sub {
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--champagne);
+    opacity: 0.85;
+  }
+
+  .menu-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+    padding-bottom: 28px;
+    border-bottom: 1px solid rgba(212,163,68,0.2);
+    position: relative;
+  }
+  .menu-tabs::before, .menu-tabs::after {
+    content: '❦';
+    position: absolute;
+    bottom: -8px;
+    color: var(--gold);
+    background: var(--shadow);
+    padding: 0 8px;
+    font-size: 12px;
+  }
+  .menu-tabs::before { left: 40%; }
+  .menu-tabs::after { left: 60%; }
+
+  .menu-tab {
+    padding: 12px 24px;
+    background: transparent;
+    border: none;
+    color: var(--cream);
+    opacity: 0.55;
+    font-family: var(--f-display);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .menu-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; left: 50%;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s, left 0.3s;
+  }
+  .menu-tab:hover { opacity: 1; color: var(--gold-light); }
+  .menu-tab.active {
+    opacity: 1;
+    color: var(--gold);
+  }
+  .menu-tab.active::after { width: 60%; left: 20%; }
+
+  .menu-panel { display: none; }
+  .menu-panel.active { display: grid; }
+
+  .menu-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 60px;
+  }
+  @media (max-width: 900px) {
+    .menu-list { grid-template-columns: 1fr; gap: 8px 0; }
+  }
+
+  .menu-item {
+    padding: 24px 0;
+    border-bottom: 1px dashed rgba(212,163,68,0.2);
+  }
+  .menu-item:last-of-type,
+  .menu-item.last-in-col { border-bottom: none; }
+
+  .menu-item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    gap: 16px;
+  }
+  .menu-item-name {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: 17px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .menu-item-name .native {
+    font-family: var(--f-italic);
+    font-style: italic;
+    text-transform: none;
+    color: var(--gold);
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+  }
+  .menu-item-dots {
+    flex: 1;
+    border-bottom: 1px dotted rgba(212,163,68,0.35);
+    min-width: 20px;
+    align-self: flex-end;
+    margin-bottom: 6px;
+    height: 1px;
+  }
+  .menu-item-price {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .menu-item-desc {
+    font-family: var(--f-body);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--cream);
+    opacity: 0.7;
+    font-weight: 300;
+    padding-right: 24px;
+  }
+
+  /* ===================== BAR / DRINKS ===================== */
+  .bar-section {
+    background:
+      radial-gradient(ellipse at 70% 30%, rgba(106,30,42,0.25), transparent 55%),
+      radial-gradient(ellipse at 30% 80%, rgba(212,163,68,0.10), transparent 55%),
+      var(--deep);
+    position: relative;
+  }
+
+  .bar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 40px;
+  }
+  @media (max-width: 900px) {
+    .bar-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  .drink-card {
+    background: linear-gradient(180deg, var(--shadow), var(--void));
+    border: 1px solid rgba(212,163,68,0.25);
+    padding: 40px 32px;
+    text-align: center;
+    position: relative;
+    transition: all 0.4s;
+    overflow: hidden;
+  }
+  .drink-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold-gradient);
+    transform: scaleX(0);
+    transition: transform 0.5s ease;
+    transform-origin: left;
+  }
+  .drink-card:hover::before { transform: scaleX(1); }
+  .drink-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-6px);
+  }
+  .drink-glyph {
+    margin: 0 auto 28px;
+    color: var(--gold);
+    opacity: 0.9;
+  }
+  .drink-cat {
+    font-family: var(--f-display);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .drink-title {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: 26px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream);
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+  .drink-sub {
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--gold);
+    margin-bottom: 24px;
+    letter-spacing: 0.01em;
+  }
+  .drink-desc {
+    font-family: var(--f-body);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--cream);
+    opacity: 0.75;
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+  .drink-price {
+    font-family: var(--f-display);
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    color: var(--gold-light);
+    padding-top: 20px;
+    border-top: 1px solid rgba(212,163,68,0.28);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .drink-price strong {
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--gold-bright);
+  }
+
+  /* ===================== LOUNGE / PRIVATE HIRE ===================== */
+  .lounge-section {
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(212,163,68,0.14), transparent 55%),
+      radial-gradient(ellipse at 20% 80%, rgba(106,30,42,0.2), transparent 55%),
+      var(--void);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lounge-frame-large {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8px;
+    border: 1px solid var(--gold);
+    background: linear-gradient(180deg, var(--deep), var(--shadow));
+    position: relative;
+  }
+  .lounge-frame-large::before,
+  .lounge-frame-large::after {
+    content: '';
+    position: absolute;
+    width: 40px; height: 40px;
+    z-index: 2;
+  }
+  .lounge-frame-large::before {
+    top: -1px; left: -1px;
+    background:
+      linear-gradient(var(--gold-light), var(--gold-light)) top left / 100% 3px no-repeat,
+      linear-gradient(var(--gold-light), var(--gold-light)) top left / 3px 100% no-repeat;
+  }
+  .lounge-frame-large::after {
+    bottom: -1px; right: -1px;
+    background:
+      linear-gradient(var(--gold-light), var(--gold-light)) bottom right / 100% 3px no-repeat,
+      linear-gradient(var(--gold-light), var(--gold-light)) bottom right / 3px 100% no-repeat;
+  }
+
+  .lounge-inner {
+    border: 1px solid rgba(212,163,68,0.3);
+    padding: 60px 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    .lounge-inner { grid-template-columns: 1fr; gap: 40px; padding: 40px 24px; }
+  }
+
+  .lounge-visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(212,163,68,0.2), transparent 60%),
+      linear-gradient(180deg, var(--burgundy), var(--void));
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(212,163,68,0.3);
+  }
+
+  .lounge-copy h3 {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(28px, 3.5vw, 44px);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .lounge-copy h3 .italic {
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    color: var(--gold);
+    display: block;
+    margin-top: 4px;
+  }
+  .lounge-copy p {
+    font-family: var(--f-body);
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--cream);
+    opacity: 0.8;
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+  .lounge-details {
+    display: grid;
+    gap: 0;
+    margin: 32px 0 40px;
+    border-top: 1px solid rgba(212,163,68,0.25);
+  }
+  .lounge-details .row {
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(212,163,68,0.15);
+    align-items: baseline;
+  }
+  .lounge-details .k {
+    font-family: var(--f-display);
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .lounge-details .v {
+    font-family: var(--f-body);
+    font-size: 15px;
+    color: var(--cream);
+    opacity: 0.85;
+    font-weight: 300;
+  }
+  .lounge-details .cap {
+    font-family: var(--f-italic);
+    font-style: italic;
+    color: var(--gold-light);
+    font-size: 15px;
+  }
+
+  /* ===================== RESERVE ===================== */
+  .reserve {
+    padding: 180px 0;
+    background:
+      radial-gradient(ellipse at center, rgba(212,163,68,0.18), transparent 50%),
+      radial-gradient(ellipse at 20% 20%, rgba(106,30,42,0.3), transparent 55%),
+      var(--void);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reserve-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative;
+    z-index: 2;
+  }
+  .reserve-crown {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+  .reserve h2 {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(44px, 6vw, 88px);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    background: var(--gold-foil);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    line-height: 1;
+    margin: 28px 0 20px;
+    animation: shimmer 6s ease-in-out infinite;
+  }
+  .reserve h2 .italic {
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    color: var(--champagne);
+    -webkit-text-fill-color: var(--champagne);
+    background: none;
+    display: block;
+    animation: none;
+    font-size: 0.75em;
+    margin-top: 8px;
+    letter-spacing: 0.005em;
+  }
+  .reserve p {
+    font-family: var(--f-body);
+    font-size: 19px;
+    line-height: 1.75;
+    color: var(--cream);
+    opacity: 0.8;
+    margin: 32px 0 48px;
+    font-weight: 300;
+  }
+  .reserve-details {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-top: 80px;
+    padding-top: 56px;
+    border-top: 1px solid rgba(212,163,68,0.25);
+    position: relative;
+  }
+  .reserve-details::before {
+    content: '';
+    position: absolute;
+    top: -6px; left: 50%;
+    transform: translateX(-50%);
+    width: 12px; height: 12px;
+    background: var(--void);
+    border: 1px solid var(--gold);
+    transform: translateX(-50%) rotate(45deg);
+  }
+  @media (max-width: 720px) {
+    .reserve-details { grid-template-columns: 1fr 1fr; gap: 32px 24px; }
+  }
+  .rd {
+    text-align: left;
+  }
+  .rd .k {
+    font-family: var(--f-display);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    font-weight: 500;
+    display: block;
+  }
+  .rd .v {
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--cream);
+    line-height: 1.4;
+    font-weight: 400;
+  }
+
+  /* ===================== FOOTER ===================== */
+  footer {
+    background: var(--void);
+    padding: 100px 0 40px;
+    border-top: 1px solid rgba(212,163,68,0.18);
+    position: relative;
+  }
+  .footer-crown {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+  }
+  @media (max-width: 900px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+  @media (max-width: 560px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+  .footer-brand h4 {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .footer-brand .tagline {
+    font-family: var(--f-italic);
+    font-style: italic;
+    color: var(--champagne);
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  .footer-brand p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--cream);
+    opacity: 0.6;
+    max-width: 320px;
+    font-weight: 300;
+  }
+  .footer-col h5 {
+    font-family: var(--f-display);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  .footer-col ul { list-style: none; display: grid; gap: 12px; }
+  .footer-col a {
+    font-family: var(--f-body);
+    font-size: 15px;
+    color: var(--cream);
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+    font-weight: 300;
+  }
+  .footer-col a:hover { opacity: 1; color: var(--gold-light); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid rgba(212,163,68,0.15);
+    font-family: var(--f-display);
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cream);
+    opacity: 0.5;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-bottom .amharic {
+    font-family: var(--f-italic);
+    font-style: italic;
+    font-size: 16px;
+    text-transform: none;
+    color: var(--gold);
+    letter-spacing: 0.01em;
+    opacity: 1;
+  }
+
+  /* ===================== REVEAL ===================== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    h1.hero-title, .reserve h2 { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="top">
+  <div class="wrap">
+    <div class="row">
+      <a href="#" class="mark">
+        <span class="mark-glyph">G</span>
+        <span>Gifa Lounge</span>
+      </a>
+      <div class="nav-links">
+        <a href="#story">The Room</a>
+        <a href="#menu">Kitchen</a>
+        <a href="#bar">The Bar</a>
+        <a href="#lounge">Private Hire</a>
+        <a href="#reserve">Visit</a>
+      </div>
+      <a href="#reserve" class="nav-cta">Reserve</a>
+      <button class="burger" aria-label="Menu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <!-- Ornate baroque corners -->
+  <svg class="hero-corner tl" width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0 L90 0 L90 2 L2 2 L2 90 L0 90 Z" fill="currentColor" opacity="0.6"/>
+    <path d="M8 8 Q 18 8, 22 18 T 42 30 M8 8 Q 8 18, 18 22 T 30 42" stroke="currentColor" stroke-width="1" fill="none" opacity="0.7"/>
+    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+    <path d="M25 8 Q 32 10, 34 16 M8 25 Q 10 32, 16 34" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+  </svg>
+  <svg class="hero-corner tr" width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0 L90 0 L90 2 L2 2 L2 90 L0 90 Z" fill="currentColor" opacity="0.6"/>
+    <path d="M8 8 Q 18 8, 22 18 T 42 30 M8 8 Q 8 18, 18 22 T 30 42" stroke="currentColor" stroke-width="1" fill="none" opacity="0.7"/>
+    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+    <path d="M25 8 Q 32 10, 34 16 M8 25 Q 10 32, 16 34" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+  </svg>
+  <svg class="hero-corner bl" width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0 L90 0 L90 2 L2 2 L2 90 L0 90 Z" fill="currentColor" opacity="0.6"/>
+    <path d="M8 8 Q 18 8, 22 18 T 42 30 M8 8 Q 8 18, 18 22 T 30 42" stroke="currentColor" stroke-width="1" fill="none" opacity="0.7"/>
+    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+    <path d="M25 8 Q 32 10, 34 16 M8 25 Q 10 32, 16 34" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+  </svg>
+  <svg class="hero-corner br" width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0 L90 0 L90 2 L2 2 L2 90 L0 90 Z" fill="currentColor" opacity="0.6"/>
+    <path d="M8 8 Q 18 8, 22 18 T 42 30 M8 8 Q 8 18, 18 22 T 30 42" stroke="currentColor" stroke-width="1" fill="none" opacity="0.7"/>
+    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+    <path d="M25 8 Q 32 10, 34 16 M8 25 Q 10 32, 16 34" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+  </svg>
+
+  <div class="wrap">
+    <div class="hero-inner reveal">
+      <!-- Ornate crown flourish above title -->
+      <div class="hero-crown">
+        <svg width="240" height="60" viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Left flourish -->
+          <path d="M20 30 Q 45 30, 55 20 Q 65 10, 80 15 Q 95 20, 100 30" stroke="#d4a344" stroke-width="1" fill="none"/>
+          <path d="M35 30 Q 50 32, 60 26" stroke="#d4a344" stroke-width="0.6" fill="none" opacity="0.6"/>
+          <circle cx="70" cy="18" r="1.5" fill="#d4a344"/>
+          <circle cx="85" cy="22" r="1" fill="#d4a344" opacity="0.7"/>
+          <!-- Center medallion with wine glass -->
+          <circle cx="120" cy="30" r="12" stroke="#d4a344" stroke-width="1" fill="none"/>
+          <circle cx="120" cy="30" r="16" stroke="#d4a344" stroke-width="0.4" fill="none" opacity="0.5"/>
+          <path d="M116 24 L124 24 L122 30 Q 120 32, 118 30 Z M120 32 L120 36 M117 36 L123 36" stroke="#f4d47c" stroke-width="0.8" fill="none"/>
+          <!-- Right flourish (mirrored) -->
+          <path d="M220 30 Q 195 30, 185 20 Q 175 10, 160 15 Q 145 20, 140 30" stroke="#d4a344" stroke-width="1" fill="none"/>
+          <path d="M205 30 Q 190 32, 180 26" stroke="#d4a344" stroke-width="0.6" fill="none" opacity="0.6"/>
+          <circle cx="170" cy="18" r="1.5" fill="#d4a344"/>
+          <circle cx="155" cy="22" r="1" fill="#d4a344" opacity="0.7"/>
+        </svg>
+      </div>
+
+      <div class="hero-eyebrow">Eritrean · Ethiopian · Est. West London</div>
+
+      <h1 class="hero-title">Gifa Lounge</h1>
+      <div class="hero-italic">a Habesha table, elegantly kept</div>
+
+      <p class="hero-sub">Deep in the low light of West London, a room set for long dinners, coffee ceremonies and late nights. Injera baked at dawn, berbere from Addis, and a bar that pours everything from house tej to a proper Old Fashioned. <em>Come for the food. Stay for the room.</em></p>
+
+      <div class="hero-ctas">
+        <a href="#reserve" class="btn-gold">
+          Reserve a Table
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+            <path d="M4 10h12M16 10l-5-5M16 10l-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a href="#menu" class="btn-outline">Explore the Menu</a>
+      </div>
+
+      <div class="hero-meta">
+        <span>Wed – Sun</span>
+        <span class="dot">◆</span>
+        <span>Noon till late</span>
+        <span class="dot">◆</span>
+        <span>Late licence Fri &amp; Sat</span>
+        <span class="dot">◆</span>
+        <span>Private hire for 60</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ INTRO STRIP ============ -->
+<section class="intro-strip">
+  <div class="wrap">
+    <div class="intro-inner reveal">
+      <svg width="140" height="30" viewBox="0 0 140 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto;">
+        <line x1="0" y1="15" x2="55" y2="15" stroke="#d4a344" stroke-width="1" opacity="0.6"/>
+        <circle cx="70" cy="15" r="3" fill="none" stroke="#d4a344" stroke-width="1"/>
+        <circle cx="70" cy="15" r="1" fill="#d4a344"/>
+        <line x1="85" y1="15" x2="140" y2="15" stroke="#d4a344" stroke-width="1" opacity="0.6"/>
+      </svg>
+
+      <p class="intro-text">
+        A meal here is a shared plate <span class="amp">&amp;</span> a long evening.<br>
+        The injera is torn with the hand.<br>
+        The coffee comes in three rounds.<br>
+        Nothing is hurried.
+      </p>
+
+      <svg width="140" height="30" viewBox="0 0 140 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto;">
+        <line x1="0" y1="15" x2="55" y2="15" stroke="#d4a344" stroke-width="1" opacity="0.6"/>
+        <circle cx="70" cy="15" r="3" fill="none" stroke="#d4a344" stroke-width="1"/>
+        <circle cx="70" cy="15" r="1" fill="#d4a344"/>
+        <line x1="85" y1="15" x2="140" y2="15" stroke="#d4a344" stroke-width="1" opacity="0.6"/>
+      </svg>
+
+      <div class="intro-signature">The House of Gifa</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIGNATURE DISHES ============ -->
+<section class="signatures" id="story">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">The Signatures</div>
+      <h2 class="section-title">
+        Three plates
+        <span class="italic">that define the kitchen.</span>
+      </h2>
+    </div>
+
+    <div class="sig-grid">
+
+      <div class="sig-card reveal">
+        <div class="sig-inner">
+          <div class="sig-illustration">
+            <!-- Injera platter with wats -->
+            <svg width="150" height="150" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="100" r="88" stroke="#d4a344" stroke-width="0.6" opacity="0.4"/>
+              <circle cx="100" cy="100" r="80" fill="#1a0f0a"/>
+              <g opacity="0.5" fill="#d4a344">
+                <circle cx="65" cy="80" r="1"/><circle cx="85" cy="70" r="0.8"/>
+                <circle cx="105" cy="85" r="1.2"/><circle cx="130" cy="80" r="1"/>
+                <circle cx="70" cy="100" r="0.8"/><circle cx="95" cy="110" r="1"/>
+                <circle cx="125" cy="115" r="0.8"/><circle cx="80" cy="125" r="1.2"/>
+                <circle cx="110" cy="130" r="0.9"/><circle cx="135" cy="125" r="1"/>
+              </g>
+              <circle cx="100" cy="70" r="16" fill="#6a1e2a" opacity="0.85"/>
+              <circle cx="70" cy="95" r="14" fill="#3d1218" opacity="0.85"/>
+              <circle cx="135" cy="98" r="15" fill="#d4a344" opacity="0.75"/>
+              <circle cx="82" cy="130" r="13" fill="#5a7a3a" opacity="0.7"/>
+              <circle cx="125" cy="132" r="14" fill="#6a1e2a" opacity="0.75"/>
+              <!-- highlights -->
+              <ellipse cx="96" cy="66" rx="4" ry="2" fill="#f4d47c" opacity="0.4"/>
+              <ellipse cx="66" cy="91" rx="3" ry="1.5" fill="#d4a344" opacity="0.3"/>
+              <ellipse cx="131" cy="94" rx="4" ry="2" fill="#f4d47c" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="sig-num">Plate No. i</div>
+          <div class="sig-name">Bebi Aynetu</div>
+          <div class="sig-native">በ ኣይነቱ</div>
+          <p class="sig-desc">The house sampler. A single injera laid with the day's shero, alicha, gomen, misir and hamli. Meant to be shared, meant to take a while.</p>
+          <span class="sig-price">£15.99</span>
+        </div>
+      </div>
+
+      <div class="sig-card reveal" style="transition-delay: 0.1s;">
+        <div class="sig-inner">
+          <div class="sig-illustration">
+            <!-- Tibs sizzling pan -->
+            <svg width="150" height="150" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- pan -->
+              <ellipse cx="100" cy="110" rx="80" ry="18" fill="#0d0705" stroke="#d4a344" stroke-width="0.8"/>
+              <ellipse cx="100" cy="105" rx="75" ry="14" fill="#180b08"/>
+              <!-- handle -->
+              <path d="M170 108 L192 108 L192 112 L170 112 Z" stroke="#d4a344" stroke-width="0.8" fill="#0d0705"/>
+              <!-- meat cubes -->
+              <rect x="70" y="95" width="12" height="10" fill="#6a1e2a" transform="rotate(15 76 100)"/>
+              <rect x="90" y="90" width="14" height="12" fill="#8B4513" transform="rotate(-10 97 96)"/>
+              <rect x="110" y="98" width="12" height="10" fill="#6a1e2a" transform="rotate(20 116 103)"/>
+              <rect x="80" y="108" width="14" height="10" fill="#8B4513" transform="rotate(-15 87 113)"/>
+              <rect x="105" y="112" width="12" height="10" fill="#3d1218" transform="rotate(5 111 117)"/>
+              <rect x="128" y="102" width="10" height="8" fill="#6a1e2a" transform="rotate(-8 133 106)"/>
+              <!-- onions -->
+              <ellipse cx="95" cy="102" rx="3" ry="1" fill="#ecd9a3" opacity="0.7"/>
+              <ellipse cx="115" cy="106" rx="2" ry="1" fill="#ecd9a3" opacity="0.7"/>
+              <ellipse cx="85" cy="115" rx="3" ry="1" fill="#ecd9a3" opacity="0.6"/>
+              <!-- steam wisps -->
+              <path d="M80 75 Q 82 65, 78 55 Q 74 45, 80 35" stroke="#d4a344" stroke-width="0.5" fill="none" opacity="0.4"/>
+              <path d="M100 70 Q 104 60, 98 50 Q 92 40, 100 30" stroke="#d4a344" stroke-width="0.5" fill="none" opacity="0.4"/>
+              <path d="M120 75 Q 122 65, 118 55 Q 114 45, 120 35" stroke="#d4a344" stroke-width="0.5" fill="none" opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="sig-num">Plate No. ii</div>
+          <div class="sig-name">Derek Tibs</div>
+          <div class="sig-native">ደረቅ ጥብስ</div>
+          <p class="sig-desc">Lean lamb seared hard in a cast-iron pan with onion, green chilli, rosemary and house spice. Served sizzling. The dish nobody sends back.</p>
+          <span class="sig-price">£16.99</span>
+        </div>
+      </div>
+
+      <div class="sig-card reveal" style="transition-delay: 0.2s;">
+        <div class="sig-inner">
+          <div class="sig-illustration">
+            <!-- Jebena (coffee pot) with cups -->
+            <svg width="150" height="150" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- jebena body -->
+              <path d="M75 130 Q 60 120, 65 95 Q 70 75, 90 70 L 90 55 L 110 55 L 110 70 Q 130 75, 135 95 Q 140 120, 125 130 Z" fill="#0d0705" stroke="#d4a344" stroke-width="1"/>
+              <!-- jebena spout -->
+              <path d="M110 78 Q 130 80, 140 85 Q 148 88, 148 92 L 138 90 Q 130 88, 120 90" stroke="#d4a344" stroke-width="0.8" fill="none"/>
+              <!-- handle -->
+              <path d="M65 100 Q 45 100, 45 115 Q 45 128, 62 125" stroke="#d4a344" stroke-width="0.8" fill="none"/>
+              <!-- cap on top -->
+              <ellipse cx="100" cy="55" rx="12" ry="4" fill="#d4a344"/>
+              <circle cx="100" cy="48" r="3" fill="none" stroke="#d4a344" stroke-width="0.8"/>
+              <!-- decorative band -->
+              <path d="M77 105 L 123 105" stroke="#f4d47c" stroke-width="0.5" opacity="0.7"/>
+              <path d="M78 110 L 122 110" stroke="#f4d47c" stroke-width="0.5" opacity="0.5"/>
+              <!-- cups (sini) -->
+              <path d="M40 155 Q 40 165, 50 165 L 60 165 Q 68 165, 68 155 L 68 150 L 40 150 Z" fill="#0d0705" stroke="#d4a344" stroke-width="0.7"/>
+              <ellipse cx="54" cy="150" rx="14" ry="2" fill="#3d1218"/>
+              <path d="M132 155 Q 132 165, 142 165 L 152 165 Q 160 165, 160 155 L 160 150 L 132 150 Z" fill="#0d0705" stroke="#d4a344" stroke-width="0.7"/>
+              <ellipse cx="146" cy="150" rx="14" ry="2" fill="#3d1218"/>
+              <!-- steam -->
+              <path d="M100 40 Q 102 30, 98 22 Q 94 14, 100 6" stroke="#d4a344" stroke-width="0.5" fill="none" opacity="0.5"/>
+              <path d="M92 42 Q 90 34, 94 26" stroke="#d4a344" stroke-width="0.5" fill="none" opacity="0.4"/>
+              <path d="M108 42 Q 110 34, 106 26" stroke="#d4a344" stroke-width="0.5" fill="none" opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="sig-num">Plate No. iii</div>
+          <div class="sig-name">Coffee Ceremony</div>
+          <div class="sig-native">ቡና</div>
+          <p class="sig-desc">Green beans roasted at your table, brewed in a jebena, poured in three rounds. Frankincense curls up. Nothing else happens for forty minutes.</p>
+          <span class="sig-price">£12 · for the table</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Baroque divider -->
+<div class="wrap">
+  <div class="divider-baroque">
+    <div class="divider-line"></div>
+    <svg width="60" height="30" viewBox="0 0 60 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="15" r="10" stroke="#d4a344" stroke-width="0.8" fill="none"/>
+      <circle cx="30" cy="15" r="14" stroke="#d4a344" stroke-width="0.4" fill="none" opacity="0.5"/>
+      <path d="M26 10 L34 10 L32 15 Q 30 17, 28 15 Z M30 17 L30 21 M27 21 L33 21" stroke="#f4d47c" stroke-width="0.6" fill="none"/>
+    </svg>
+    <div class="divider-line"></div>
+  </div>
+</div>
+
+<!-- ============ MENU FOLIO ============ -->
+<section class="menu-section" id="menu">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">The Kitchen</div>
+      <h2 class="section-title">
+        Our Bill of Fare
+        <span class="italic">handwritten each morning.</span>
+      </h2>
+    </div>
+
+    <div class="folio reveal">
+      <div class="folio-inner">
+
+        <div class="folio-title">
+          <h3>Menu</h3>
+          <div class="sub">— Habesha kitchen · London W6 —</div>
+        </div>
+
+        <div class="menu-tabs">
+          <button class="menu-tab active" data-tab="veg">Vegan &amp; Vegetarian</button>
+          <button class="menu-tab" data-tab="meat">Meat &amp; Lamb</button>
+          <button class="menu-tab" data-tab="breakfast">Breakfast</button>
+        </div>
+
+        <!-- VEG PANEL -->
+        <div class="menu-panel active" data-panel="veg">
+          <div class="menu-list">
+
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Bebi Aynetu <span class="native">በ ኣይነቱ</span></div>
+                <div class="menu-item-dots"></div>
+                <div class="menu-item-price">£15.99</div>
+              </div>
+              <div class="menu-item-desc">The house sampler. Chef's selection of the day's vegan dishes served across a single injera. Made to share.</div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Shero <span class="native">ሽሮ</span></div>
+                <div class="menu-item-dots"></div>
+                <div class="menu-item-price">£14.99</div>
+              </div>
+              <div class="menu-item-desc">Ground split pea flour cooked slowly with turmeric, garlic and olive oil until silken.</div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Hamli <span class="native">ሓምሊ</span></div>
+                <div class="menu-item-dots"></div>
+                <div class="menu-item-price">£13.99</div>
+              </div>
+              <div class="menu-item-desc">Spinach and collard greens braised with olive oil, garlic and a whisper of chilli.</div>
+            </div>
+
+            <div class="menu-item last-in-col">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Special Salad <span class="native">ሰላጣ</span></div>
+                <div class="menu-item-dots"></div>
+                <div class="menu-item-price">£13.99</div>
+              </div>
+              <div class="menu-item-desc">Lettuce, tomato, pepper and onion with olive oil, lemon and boiled potato. Served cold, meant to cut.</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- MEAT PANEL -->
+        <div class="menu-panel" data-panel="meat">
+          <div class="menu-list">
+
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Derek Tibs <span class="native">ደረቅ ጥብስ</span></div>
+                <div class="menu-item-dots"></div>
+                <div class="menu-item-price">£16.99</div>
+              </div>
+              <div class="menu-item-desc">Lean lamb seared hard in a cast-iron pan with onion, green chilli, rosemary and house spice.</div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Keyih Tibs <span class="native">ቀይሕ ጥብስ</span></div>
+                <div class="menu-item-dots"></div>
+                <div class="menu-item-price">£16.99</div>
+              </div>
+              <div class="menu-item-desc">Red tibs. Lamb pieces cooked slower with berbere, tomato and onion until the sauce coats every piece.</div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Sada Tibs <span class="native">ሳዳ ጥብስ</span></div>
+                <div class="menu-item-dots"></div>
+                <div class="menu-item-price">£16.99</div>
+              </div>
+              <div class="menu-item-desc">The mild counterpart. Lamb fried with onion, garlic, ginger and house spice. Clean and hot.</div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Injera Firfir <span class="native">እንጀራ ፍርፍር</span></div>
+                <div class="menu-item-dots"></div>
+                <div class="menu-item-price">£15.99</div>
+              </div>
+              <div class="menu-item-desc">Torn injera folded into lamb sauce until every piece is soaked. The dish that refuses to waste.</div>
+            </div>
+
+            <div class="menu-item last-in-col">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Pasta Maccaroni <span class="native">ፓስታ</span></div>
+                <div class="menu-item-dots"></div>
+                <div class="menu-item-price">£12.99</div>
+              </div>
+              <div class="menu-item-desc">Beef ragù over pasta — the Italian ghost in every Eritrean menu. Made the way it always has been.</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- BREAKFAST PANEL -->
+        <div class="menu-panel" data-panel="breakfast">
+          <div class="menu-list">
+
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Ful Meselah <span class="native">ፉል</span></div>
+                <div class="menu-item-dots"></div>
+                <div class="menu-item-price">£10.99</div>
+              </div>
+              <div class="menu-item-desc">Broad beans stewed soft in sesame oil, topped with boiled egg, feta, tomato and green chilli.</div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Kicha Fitfit <span class="native">ኪጫ</span></div>
+                <div class="menu-item-dots"></div>
+                <div class="menu-item-price">£10.99</div>
+              </div>
+              <div class="menu-item-desc">Torn flatbread tossed with berbere-warmed onion, tomato and clarified butter.</div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Special Fata <span class="native">ፋታ</span></div>
+                <div class="menu-item-dots"></div>
+                <div class="menu-item-price">£13.99</div>
+              </div>
+              <div class="menu-item-desc">Onion, tomato, berbere and lamb stewed together, finished with yogurt and green chilli.</div>
+            </div>
+
+            <div class="menu-item last-in-col">
+              <div class="menu-item-top">
+                <div class="menu-item-name">Egg Panini <span class="native">ፓኒኖ</span></div>
+                <div class="menu-item-dots"></div>
+                <div class="menu-item-price">£10.99</div>
+              </div>
+              <div class="menu-item-desc">French bread, scrambled egg, crisp lettuce and a knock of green chilli. Made quickly, eaten quickly.</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BAR ============ -->
+<section class="bar-section" id="bar">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">The Bar</div>
+      <h2 class="section-title">
+        Three glasses
+        <span class="italic">that anchor the room.</span>
+      </h2>
+    </div>
+
+    <div class="bar-grid">
+
+      <div class="drink-card reveal">
+        <svg class="drink-glyph" width="70" height="70" viewBox="0 0 70 70" fill="none">
+          <!-- Coffee cup / jebena -->
+          <path d="M25 30 Q 25 15, 35 12 L 35 8 L 45 8 L 45 12 Q 55 15, 55 30 Q 55 45, 40 48 Q 25 45, 25 30 Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+          <path d="M52 25 Q 62 27, 62 32" stroke="currentColor" stroke-width="1" fill="none"/>
+          <ellipse cx="40" cy="8" rx="6" ry="1.5" fill="currentColor"/>
+          <path d="M35 55 Q 40 60, 45 55" stroke="currentColor" stroke-width="1" fill="none" opacity="0.7"/>
+          <path d="M38 62 L42 62" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <div class="drink-cat">Nº 01 · The Ritual</div>
+        <div class="drink-title">Coffee<br>Ceremony</div>
+        <div class="drink-sub">bunna · ቡና</div>
+        <p class="drink-desc">Green beans roasted table-side on a clay brazier, ground by hand, brewed in a jebena. Three rounds — abol, tona, baraka — poured with popcorn and himbasha. Frankincense in the air.</p>
+        <div class="drink-price"><strong>£12</strong> · for the table</div>
+      </div>
+
+      <div class="drink-card reveal" style="transition-delay: 0.1s;">
+        <svg class="drink-glyph" width="70" height="70" viewBox="0 0 70 70" fill="none">
+          <!-- Berele flask (round tej flask) -->
+          <ellipse cx="35" cy="42" rx="18" ry="20" stroke="currentColor" stroke-width="1.2" fill="none"/>
+          <path d="M30 22 L30 14 Q 30 10, 35 10 Q 40 10, 40 14 L 40 22" stroke="currentColor" stroke-width="1.2" fill="none"/>
+          <ellipse cx="35" cy="14" rx="3" ry="1" fill="currentColor"/>
+          <!-- honey wine level -->
+          <path d="M20 44 Q 35 40, 50 44" stroke="currentColor" stroke-width="0.6" opacity="0.6" fill="none"/>
+          <ellipse cx="35" cy="52" rx="10" ry="3" fill="currentColor" opacity="0.15"/>
+        </svg>
+        <div class="drink-cat">Nº 02 · The House</div>
+        <div class="drink-title">Tej</div>
+        <div class="drink-sub">honey wine · ጠጅ</div>
+        <p class="drink-desc">Fermented slowly with gesho leaves — a wild hop-like herb that gives it a light bitterness on the finish. Golden, sweet-dry, poured into a berele. The house pour, and the only one you'll find on most London bars.</p>
+        <div class="drink-price"><strong>£8</strong> · glass &nbsp;·&nbsp; <strong>£30</strong> · carafe</div>
+      </div>
+
+      <div class="drink-card reveal" style="transition-delay: 0.2s;">
+        <svg class="drink-glyph" width="70" height="70" viewBox="0 0 70 70" fill="none">
+          <!-- Highball cocktail glass -->
+          <path d="M20 15 L50 15 L44 60 L26 60 Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+          <path d="M23 22 L47 22" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+          <path d="M25 30 Q 35 32, 45 30 L 44 58 L 26 58 Z" fill="currentColor" opacity="0.15"/>
+          <!-- salt rim dots -->
+          <circle cx="22" cy="17" r="0.8" fill="currentColor"/>
+          <circle cx="28" cy="17" r="0.8" fill="currentColor"/>
+          <circle cx="34" cy="17" r="0.8" fill="currentColor"/>
+          <circle cx="40" cy="17" r="0.8" fill="currentColor"/>
+          <circle cx="46" cy="17" r="0.8" fill="currentColor"/>
+          <!-- ice cubes -->
+          <rect x="30" y="35" width="6" height="6" stroke="currentColor" stroke-width="0.5" opacity="0.6" fill="none"/>
+          <rect x="33" y="42" width="6" height="6" stroke="currentColor" stroke-width="0.5" opacity="0.6" fill="none"/>
+          <!-- garnish -->
+          <line x1="42" y1="8" x2="46" y2="18" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <div class="drink-cat">Nº 03 · The Modern</div>
+        <div class="drink-title">Berbere<br>Paloma</div>
+        <div class="drink-sub">house cocktail</div>
+        <p class="drink-desc">Blanco tequila, pink grapefruit, lime, a soda top — built over a rim of berbere salt that catches the corner of your mouth on the first sip. It shouldn't work. It does. On the menu since we opened.</p>
+        <div class="drink-price"><strong>£11</strong> · one for the road</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Baroque divider -->
+<div class="wrap">
+  <div class="divider-baroque">
+    <div class="divider-line"></div>
+    <svg width="80" height="30" viewBox="0 0 80 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 15 Q 15 15, 20 10 Q 25 5, 32 15 Q 40 25, 48 15 Q 55 5, 60 10 Q 65 15, 80 15" stroke="#d4a344" stroke-width="1" fill="none"/>
+      <circle cx="40" cy="15" r="2" fill="#d4a344"/>
+    </svg>
+    <div class="divider-line"></div>
+  </div>
+</div>
+
+<!-- ============ LOUNGE / PRIVATE HIRE ============ -->
+<section class="lounge-section" id="lounge">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Private Hire</div>
+      <h2 class="section-title">
+        The Room, Yours
+        <span class="italic">from dinner until one.</span>
+      </h2>
+    </div>
+
+    <div class="lounge-frame-large reveal">
+      <div class="lounge-inner">
+
+        <div class="lounge-visual">
+          <svg width="80%" viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Ornate frame -->
+            <rect x="20" y="20" width="360" height="460" stroke="#d4a344" stroke-width="1" fill="none"/>
+            <rect x="30" y="30" width="340" height="440" stroke="#d4a344" stroke-width="0.4" fill="none" opacity="0.5"/>
+
+            <!-- Chandelier illustration center -->
+            <g transform="translate(200, 130)">
+              <!-- chain -->
+              <line x1="0" y1="-60" x2="0" y2="-30" stroke="#d4a344" stroke-width="0.8"/>
+              <!-- top canopy -->
+              <ellipse cx="0" cy="-30" rx="8" ry="3" fill="#d4a344"/>
+              <!-- crystal tiers -->
+              <path d="M0 -25 L -40 0 L 40 0 Z" stroke="#f4d47c" stroke-width="1" fill="rgba(212,163,68,0.15)"/>
+              <path d="M-25 5 L -45 25 L 45 25 L 25 5" stroke="#f4d47c" stroke-width="1" fill="rgba(212,163,68,0.1)"/>
+              <!-- candles -->
+              <line x1="-40" y1="0" x2="-40" y2="-10" stroke="#f4d47c" stroke-width="1.5"/>
+              <line x1="-20" y1="-3" x2="-20" y2="-13" stroke="#f4d47c" stroke-width="1.5"/>
+              <line x1="0" y1="-5" x2="0" y2="-15" stroke="#f4d47c" stroke-width="1.5"/>
+              <line x1="20" y1="-3" x2="20" y2="-13" stroke="#f4d47c" stroke-width="1.5"/>
+              <line x1="40" y1="0" x2="40" y2="-10" stroke="#f4d47c" stroke-width="1.5"/>
+              <!-- flames -->
+              <ellipse cx="-40" cy="-13" rx="1.5" ry="3" fill="#ffe08a"/>
+              <ellipse cx="-20" cy="-16" rx="1.5" ry="3" fill="#ffe08a"/>
+              <ellipse cx="0" cy="-18" rx="1.5" ry="3" fill="#ffe08a"/>
+              <ellipse cx="20" cy="-16" rx="1.5" ry="3" fill="#ffe08a"/>
+              <ellipse cx="40" cy="-13" rx="1.5" ry="3" fill="#ffe08a"/>
+              <!-- glow -->
+              <circle cx="0" cy="-10" r="60" fill="url(#glow)" opacity="0.4"/>
+              <defs>
+                <radialGradient id="glow">
+                  <stop offset="0%" stop-color="#ffe08a" stop-opacity="0.8"/>
+                  <stop offset="100%" stop-color="#ffe08a" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+            </g>
+
+            <!-- Two candles below -->
+            <g transform="translate(120, 340)">
+              <rect x="-3" y="0" width="6" height="30" fill="#d4a344"/>
+              <line x1="0" y1="-8" x2="0" y2="0" stroke="#f4d47c" stroke-width="1.5"/>
+              <ellipse cx="0" cy="-10" rx="1.5" ry="3" fill="#ffe08a"/>
+            </g>
+            <g transform="translate(280, 340)">
+              <rect x="-3" y="0" width="6" height="30" fill="#d4a344"/>
+              <line x1="0" y1="-8" x2="0" y2="0" stroke="#f4d47c" stroke-width="1.5"/>
+              <ellipse cx="0" cy="-10" rx="1.5" ry="3" fill="#ffe08a"/>
+            </g>
+
+            <!-- Wine bottle and glasses -->
+            <g transform="translate(200, 380)">
+              <!-- Bottle -->
+              <path d="M-4 -30 L-4 -20 Q -8 -18, -8 -10 L -8 10 L 8 10 L 8 -10 Q 8 -18, 4 -20 L 4 -30 Z" stroke="#d4a344" stroke-width="0.8" fill="#0d0705"/>
+              <rect x="-6" y="-5" width="12" height="8" fill="#3d1218" opacity="0.7"/>
+              <!-- Glasses -->
+              <path d="M-40 -5 L-32 -5 L-33 5 L-39 5 Z L-38 5 L-38 12 L-34 12 L-34 5" stroke="#d4a344" stroke-width="0.6" fill="none"/>
+              <path d="M-40 -5 L-32 -5 L-33 5 L-39 5 Z" fill="rgba(106,30,42,0.5)"/>
+              <line x1="-36" y1="5" x2="-36" y2="12" stroke="#d4a344" stroke-width="0.6"/>
+              <line x1="-40" y1="12" x2="-32" y2="12" stroke="#d4a344" stroke-width="0.6"/>
+
+              <path d="M32 -5 L40 -5 L39 5 L33 5 Z" stroke="#d4a344" stroke-width="0.6" fill="rgba(106,30,42,0.5)"/>
+              <line x1="36" y1="5" x2="36" y2="12" stroke="#d4a344" stroke-width="0.6"/>
+              <line x1="32" y1="12" x2="40" y2="12" stroke="#d4a344" stroke-width="0.6"/>
+            </g>
+
+            <!-- Ornate flourishes at corners inside -->
+            <path d="M35 35 Q 55 35, 60 55 M35 35 Q 35 55, 55 60" stroke="#d4a344" stroke-width="0.6" fill="none" opacity="0.6"/>
+            <path d="M365 35 Q 345 35, 340 55 M365 35 Q 365 55, 345 60" stroke="#d4a344" stroke-width="0.6" fill="none" opacity="0.6"/>
+            <path d="M35 465 Q 55 465, 60 445 M35 465 Q 35 445, 55 440" stroke="#d4a344" stroke-width="0.6" fill="none" opacity="0.6"/>
+            <path d="M365 465 Q 345 465, 340 445 M365 465 Q 365 445, 345 440" stroke="#d4a344" stroke-width="0.6" fill="none" opacity="0.6"/>
+
+            <!-- Caption -->
+            <text x="200" y="455" text-anchor="middle" fill="#d4a344" font-family="Cinzel, serif" font-size="9" letter-spacing="4">THE ROOM · SET FOR TWENTY</text>
+          </svg>
+        </div>
+
+        <div class="lounge-copy">
+          <h3>Take the whole room.
+            <span class="italic">Bring your people.</span>
+          </h3>
+          <p>From close of service through to one in the morning, the lounge is yours. Long tables for a family celebration. Standing floor for a launch. Coffee ceremony corner for something quieter. We'll dress the room, plate the food, staff the bar. You handle the guest list.</p>
+
+          <div class="lounge-details">
+            <div class="row">
+              <span class="k">Capacity</span>
+              <span class="v">Seated dinner or standing reception</span>
+              <span class="cap">up to 60</span>
+            </div>
+            <div class="row">
+              <span class="k">Occasions</span>
+              <span class="v">Birthdays · graduations · corporate · mahber</span>
+              <span class="cap">any</span>
+            </div>
+            <div class="row">
+              <span class="k">Hours</span>
+              <span class="v">Exclusive from 6pm — extended licence to 1am</span>
+              <span class="cap">Fri &amp; Sat</span>
+            </div>
+            <div class="row">
+              <span class="k">Menu</span>
+              <span class="v">Set Habesha feast, à la carte, or bespoke</span>
+              <span class="cap">from £45pp</span>
+            </div>
+          </div>
+
+          <a href="#reserve" class="btn-gold">
+            Enquire About Hire
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+              <path d="M4 10h12M16 10l-5-5M16 10l-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESERVE ============ -->
+<section class="reserve" id="reserve">
+  <div class="wrap">
+    <div class="reserve-inner reveal">
+      <div class="reserve-crown">
+        <svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 25 Q 30 25, 40 15 Q 50 5, 65 12 Q 80 18, 90 25" stroke="#d4a344" stroke-width="1" fill="none"/>
+          <path d="M25 25 Q 40 27, 50 22" stroke="#d4a344" stroke-width="0.5" opacity="0.6"/>
+          <circle cx="100" cy="25" r="8" stroke="#d4a344" stroke-width="1" fill="none"/>
+          <circle cx="100" cy="25" r="11" stroke="#d4a344" stroke-width="0.4" fill="none" opacity="0.5"/>
+          <circle cx="100" cy="25" r="2" fill="#f4d47c"/>
+          <path d="M190 25 Q 170 25, 160 15 Q 150 5, 135 12 Q 120 18, 110 25" stroke="#d4a344" stroke-width="1" fill="none"/>
+          <path d="M175 25 Q 160 27, 150 22" stroke="#d4a344" stroke-width="0.5" opacity="0.6"/>
+        </svg>
+      </div>
+
+      <div class="eyebrow" style="justify-content: center;">Reservations</div>
+      <h2>
+        Book Your Table
+        <span class="italic">— or the whole room.</span>
+      </h2>
+      <p>Wednesday through Sunday, from noon until late. Walk-ins welcome when we have space, but weekend nights fill up early — book if you can. For private hire, tell us the date and how many; we'll come back the same day.</p>
+
+      <div class="hero-ctas" style="justify-content: center; margin-bottom: 0;">
+        <a href="tel:+442000000000" class="btn-gold">Call to Reserve</a>
+        <a href="mailto:hello@gifalounge.com" class="btn-outline">Email for Hire</a>
+      </div>
+
+      <div class="reserve-details">
+        <div class="rd">
+          <span class="k">Address</span>
+          <span class="v">Young Street<br>London W6</span>
+        </div>
+        <div class="rd">
+          <span class="k">Kitchen</span>
+          <span class="v">Wed – Sun<br>12pm – 11pm</span>
+        </div>
+        <div class="rd">
+          <span class="k">Bar &amp; Lounge</span>
+          <span class="v">Fri &amp; Sat<br>until 1am</span>
+        </div>
+        <div class="rd">
+          <span class="k">Direct</span>
+          <span class="v">hello@gifalounge.com<br>@gifalounge</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-crown">
+      <svg width="180" height="50" viewBox="0 0 180 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 25 Q 30 25, 40 20 Q 55 10, 70 22" stroke="#d4a344" stroke-width="0.8" fill="none"/>
+        <circle cx="90" cy="25" r="10" stroke="#d4a344" stroke-width="1" fill="none"/>
+        <circle cx="90" cy="25" r="14" stroke="#d4a344" stroke-width="0.4" fill="none" opacity="0.5"/>
+        <path d="M86 20 L94 20 L92 25 Q 90 27, 88 25 Z M90 27 L90 30 M87 30 L93 30" stroke="#f4d47c" stroke-width="0.8" fill="none"/>
+        <path d="M170 25 Q 150 25, 140 20 Q 125 10, 110 22" stroke="#d4a344" stroke-width="0.8" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>Gifa Lounge</h4>
+        <div class="tagline">a Habesha table, elegantly kept.</div>
+        <p>An Eritrean and Ethiopian restaurant, bar and private-hire lounge in West London. Open Wednesday through Sunday.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Visit</h5>
+        <ul>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#bar">The Bar</a></li>
+          <li><a href="#lounge">Private Hire</a></li>
+          <li><a href="#reserve">Reserve</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Find</h5>
+        <ul>
+          <li><a href="#">Young Street, W6</a></li>
+          <li><a href="tel:+442000000000">Call the room</a></li>
+          <li><a href="mailto:hello@gifalounge.com">Email us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Follow</h5>
+        <ul>
+          <li><a href="https://instagram.com/gifalounge">Instagram</a></li>
+          <li><a href="https://facebook.com/gifalounge">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 Gifa Lounge · Made in London</div>
+      <div class="amharic">ብዙ ፍቅር · with love</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Menu tabs
+  const tabs = document.querySelectorAll('.menu-tab');
+  const panels = document.querySelectorAll('.menu-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.menu-panel[data-panel="${target}"]`).classList.add('active');
+    });
+  });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
