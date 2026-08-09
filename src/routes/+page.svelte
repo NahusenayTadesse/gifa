@@ -64,7 +64,7 @@
 		</div>
 	</PageHero>
 {/if}
-{#if data.loungeGallery.length}
+<!-- {#if data.loungeGallery.length}
 	<section class="py-20">
 		<div class="container mx-auto px-4 sm:px-6">
 			<SectionHeading title="The room, after dark" subtitle="A look at Gifa once the lights go low." />
@@ -73,7 +73,7 @@
 			<ImageGallery images={data.loungeGallery} label="The lounge at night" />
 		</div>
 	</section>
-{/if}
+{/if} -->
 <Marquee
 	items={[
 		'Halal kitchen',
