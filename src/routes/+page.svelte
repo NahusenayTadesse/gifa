@@ -136,8 +136,7 @@
 	</div>
 </section>
 
-<!-- Signature dishes -->
-{#if data.dishes.length}
+<!-- {#if data.dishes.length}
 	<section class="atmosphere py-24">
 		<div class="container mx-auto px-4 sm:px-6">
 			<SectionHeading
@@ -170,7 +169,7 @@
 			</div>
 		</div>
 	</section>
-{/if}
+{/if} -->
 
 
 
