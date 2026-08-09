@@ -42,7 +42,7 @@
 	});
 </script>
 
-<section class="relative isolate overflow-hidden {size === 'lg' ? 'py-32 lg:py-44' : 'py-28 lg:py-36'}">
+<section class="relative isolate overflow-hidden {size === 'lg' ? 'py-16 lg:py-44' : 'py-28 lg:py-36'}">
 	<div class="absolute inset-0 -z-20 {reduceMotion ? '' : 'hero-pan'}">
 		{#each slides as slide, i (slide.src + i)}
 			<img

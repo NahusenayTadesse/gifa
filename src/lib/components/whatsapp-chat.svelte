@@ -247,14 +247,14 @@
 					{/if}
 				</div>
 			</div>
-		{:else if teasing}
+		<!-- {:else if teasing}
 			<Button
 				type="button"
 				onclick={toggle}
 				class="chat-teaser max-w-60 border border-border bg-card px-3 py-2 text-left text-sm text-foreground shadow-lg transition-colors hover:border-primary/40"
 			>
 				Questions? Chat with us on WhatsApp 👋
-			</Button>
+			</Button> -->
 		{/if}
 
 		<Button
