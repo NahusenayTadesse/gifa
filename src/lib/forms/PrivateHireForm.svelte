@@ -8,6 +8,7 @@
 	import { Send, CircleCheckBig, CircleAlert } from '@lucide/svelte';
 	import { toast } from 'svelte-sonner';
 	import type { PrivateHireSchema } from '../../routes/private-hire/schema';
+	import { toastOnError } from '$lib/superform-defaults';
 
 	let {
 		data,
@@ -15,7 +16,8 @@
 	}: { data: SuperValidated<Infer<PrivateHireSchema>>; action?: string } = $props();
 
 	const { form, errors, allErrors, enhance, delayed, message } = superForm(data, {
-		resetForm: true
+		resetForm: true,
+		onError: toastOnError
 	});
 
 	let sent = $state(false);
@@ -48,7 +50,7 @@
 			<div
 				role="alert"
 				aria-live="assertive"
-				class="mb-2 flex items-center gap-2 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-800"
+				class="mb-2 flex items-center gap-2 rounded-lg bg-destructive/15 p-3 text-sm text-destructive"
 			>
 				<CircleAlert class="size-4 shrink-0" />
 				{$message.text}

@@ -126,6 +126,7 @@ export async function GET({ params, request }: { params: { name: string }; reque
 				'Content-Range': `bytes ${start}-${end}/${stats.size}`,
 				'Content-Length': String(end - start + 1),
 				'Content-Type': mimeType,
+				'X-Content-Type-Options': 'nosniff',
 				'Accept-Ranges': 'bytes',
 				'Cache-Control': cacheControl(ext),
 				'Last-Modified': lastMod,
@@ -142,6 +143,7 @@ export async function GET({ params, request }: { params: { name: string }; reque
 		headers: {
 			'Content-Type': mimeType,
 			'Content-Length': String(stats.size),
+			'X-Content-Type-Options': 'nosniff',
 			'Cache-Control': cacheControl(ext),
 			'Last-Modified': lastMod,
 			'Accept-Ranges': 'bytes',

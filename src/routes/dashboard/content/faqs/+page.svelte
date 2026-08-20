@@ -5,7 +5,8 @@
 		deleteColumn,
 		editColumn,
 		indexColumn,
-		longColumn
+		longColumn,
+		reorderColumn
 	} from '$lib/dashboard/columns';
 	import type { CrudField } from '$lib/components/Table/crud-dialog.svelte';
 
@@ -27,6 +28,7 @@
 
 	const columns = [
 		indexColumn,
+		reorderColumn(data.rows, data.reorderForm),
 		column('page', 'Page'),
 		longColumn('question', 'Question'),
 		longColumn('answer', 'Answer'),
@@ -49,4 +51,5 @@
 	{fields}
 	{columns}
 	rows={data.rows}
+	filterKeys={['page']}
 />

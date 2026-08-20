@@ -87,7 +87,7 @@ export const actions: Actions = {
 
 		try {
 			const avatarFile = avatar ? await saveUploadedFile(avatar) : undefined;
-			await db
+			const [result] = await db
 				.update(paymentMethods)
 				.set({
 					name,
@@ -98,6 +98,13 @@ export const actions: Actions = {
 					updatedBy: locals?.user?.id
 				})
 				.where(eq(paymentMethods.id, id));
+			if (result.affectedRows === 0) {
+				return message(
+					form,
+					{ type: 'error', text: 'That testimonial no longer exists' },
+					{ status: 404 }
+				);
+			}
 			return message(form, { type: 'success', text: 'Testimonial Successfully Updated' });
 		} catch (err: any) {
 			return message(
@@ -120,7 +127,14 @@ export const actions: Actions = {
 		const { id } = form.data;
 
 		try {
-			await db.delete(paymentMethods).where(eq(paymentMethods.id, id));
+			const [result] = await db.delete(paymentMethods).where(eq(paymentMethods.id, id));
+			if (result.affectedRows === 0) {
+				return message(
+					form,
+					{ type: 'error', text: 'That testimonial was already deleted' },
+					{ status: 404 }
+				);
+			}
 			return message(form, { type: 'success', text: 'Testimonial Successfully Deleted' });
 		} catch (err: any) {
 			return message(

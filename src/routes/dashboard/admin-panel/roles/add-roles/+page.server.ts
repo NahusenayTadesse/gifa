@@ -22,7 +22,7 @@ export const actions: Actions = {
 			return message(form, { type: 'error', text: 'Please check the form for Errors' });
 		}
 
-		const { name, description, permissions } = form.data;
+		const { name, description } = form.data;
 
 		try {
 			await db.insert(roles).values({ name, description });
@@ -38,12 +38,10 @@ export const actions: Actions = {
 		} catch (err: any) {
 			if (err.code === 'ER_DUP_ENTRY') return setError(form, 'name', 'Role Name already exists.');
 
+			console.error('Failed to add role:', err);
 			return message(form, {
 				type: 'error',
-				text:
-					err.code === 'ER_DUP_ENTRY'
-						? 'Role Name is already taken. Please choose another one.'
-						: err.message
+				text: 'Could not add role. Please try again.'
 			});
 		}
 	}

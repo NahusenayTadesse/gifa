@@ -4,13 +4,15 @@
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import LoadingBtn from '$lib/formComponents/LoadingBtn.svelte';
 	import { superForm } from 'sveltekit-superforms';
+	import { toastOnError } from '$lib/superform-defaults';
 	import { toast } from 'svelte-sonner';
 
 	let { data, id }: { data: any; id: number } = $props();
 
 	const { form, enhance, delayed, message } = superForm(data, {
 		resetForm: false,
-		id: `delete-${id}`
+		id: `delete-${id}`,
+		onError: toastOnError
 	});
 
 	$form.id = id;

@@ -7,6 +7,7 @@
 	import { Trash } from '@lucide/svelte';
 	import { superForm } from 'sveltekit-superforms';
 	import { toast } from 'svelte-sonner';
+	import { toastOnError } from '$lib/superform-defaults';
 
 	let {
 		data,
@@ -20,7 +21,8 @@
 
 	const { form, enhance, delayed, message, allErrors } = superForm(data, {
 		resetForm: false,
-		id: formId
+		id: formId,
+		onError: toastOnError
 	});
 
 	$form.id = id;

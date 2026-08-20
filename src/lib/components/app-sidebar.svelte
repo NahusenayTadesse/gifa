@@ -60,7 +60,15 @@
 					]
 				},
 				{ title: 'Gallery', url: '/dashboard/content/gallery', icon: Image },
-				{ title: 'Events', url: '/dashboard/content/events', icon: PartyPopper },
+				{
+					title: 'Events',
+					url: '/dashboard/content/events',
+					icon: PartyPopper,
+					items: [
+						{ title: 'Events', url: '/dashboard/content/events' },
+						{ title: 'Event Gallery', url: '/dashboard/content/event-gallery' }
+					]
+				},
 				{ title: 'Opening Hours', url: '/dashboard/content/opening-hours', icon: Clock },
 				{ title: 'Announcements', url: '/dashboard/content/announcements', icon: Megaphone },
 				{

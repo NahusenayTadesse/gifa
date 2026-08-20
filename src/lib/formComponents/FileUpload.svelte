@@ -12,6 +12,7 @@
 	import { fileProxy } from 'sveltekit-superforms';
 	import { assetUrl } from '$lib/assets';
 	import imageCompression from 'browser-image-compression';
+	import { toast } from 'svelte-sonner';
 
 	let { form, name, placeholder = 'PDF or Images (Max 10MB)', image = '' } = $props();
 
@@ -19,8 +20,18 @@
 	let isDragging = $state(false);
 	let isProcessing = $state(false);
 
+	// Reject before attempting compression — decoding a huge phone photo into
+	// memory to shrink it can hang the tab for a long time with no feedback.
+	const MAX_RAW_BYTES = 25 * 1024 * 1024;
+
 	async function handleFileSelection(files: FileList | null) {
 		if (!files || files.length === 0) return;
+
+		const tooLarge = Array.from(files).find((f) => f.size > MAX_RAW_BYTES);
+		if (tooLarge) {
+			toast.error(`${tooLarge.name} is over 25MB — pick a smaller file.`);
+			return;
+		}
 
 		isProcessing = true;
 
@@ -76,7 +87,7 @@
 	<Input
 		id={name}
 		type="file"
-		class="hidden"
+		class="sr-only"
 		bind:files={$file}
 		{name}
 		accept="image/*,application/pdf"

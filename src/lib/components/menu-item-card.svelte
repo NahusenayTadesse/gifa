@@ -13,10 +13,10 @@
 </script>
 
 <div class="menu-row py-6 first:pt-0">
-	<div class="mb-2 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+	<div class="mb-2 flex items-baseline gap-x-3">
 		<h4
-			class="font-heading min-w-0 text-lg tracking-[0.08em] uppercase {item.isAvailable
-				? 'text-cream'
+			class="font-heading min-w-0 shrink text-lg tracking-[0.08em] uppercase {item.isAvailable
+				? 'text-foreground'
 				: 'text-muted-foreground line-through'}"
 		>
 			{item.name}
@@ -45,7 +45,7 @@
 		</div>
 	{/if}
 	{#if item.description}
-		<p class="font-sans text-[15px] leading-relaxed text-cream/70">{item.description}</p>
+		<p class="font-sans text-[15px] leading-relaxed text-muted-foreground">{item.description}</p>
 	{/if}
 	{#if item.allergens?.length}
 		<p class="text-ash mt-1 font-sans text-sm italic">Contains: {item.allergens.join(', ')}</p>

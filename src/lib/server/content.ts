@@ -133,6 +133,14 @@ export const getEventBySlug = async (slug: string) =>
 			.limit(1)
 	).at(0);
 
+/** Extra photos for one event, shown at the bottom of its page. */
+export const getEventGallery = (eventId: number) =>
+	db
+		.select()
+		.from(schema.eventGallery)
+		.where(eq(schema.eventGallery.eventId, eventId))
+		.orderBy(asc(schema.eventGallery.id));
+
 /** Past events flagged as private-hire social proof. */
 export const getPrivateHireExamples = async () => {
 	const rows = await db

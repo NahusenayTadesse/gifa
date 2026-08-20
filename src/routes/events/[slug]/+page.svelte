@@ -1,6 +1,8 @@
 <script lang="ts">
 	import PageHero from '$lib/components/page-hero.svelte';
 	import EventRegistrationForm from '$lib/forms/EventRegistrationForm.svelte';
+	import ImageGallery from '$lib/components/image-gallery.svelte';
+	import SectionHeading from '$lib/components/section-heading.svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import { CalendarDays, Clock, Ticket } from '@lucide/svelte';
 	import type { PageData } from './$types';
@@ -13,6 +15,10 @@
 		month: 'long'
 	});
 	const timeFormatter = new Intl.DateTimeFormat('en-GB', { hour: 'numeric', minute: '2-digit' });
+
+	const galleryImages = $derived(
+		data.gallery.map((photo) => ({ src: photo.imageUrl, alt: data.event.title }))
+	);
 
 	const startDate = $derived(dateFormatter.format(new Date(data.event.startsAt)));
 	const startTime = $derived(timeFormatter.format(new Date(data.event.startsAt)));
@@ -69,7 +75,7 @@
 			{/if}
 
 			{#if data.event.bookingNote}
-				<p class="text-champagne mt-6 italic">{data.event.bookingNote}</p>
+				<p class="mt-6 text-foreground italic">{data.event.bookingNote}</p>
 			{/if}
 		</div>
 
@@ -84,3 +90,14 @@
 		</div>
 	</div>
 </section>
+
+{#if data.gallery.length}
+	<section class="pb-20">
+		<div class="container mx-auto px-4 sm:px-6">
+			<SectionHeading title="Photos from this event" />
+		</div>
+		<div use:reveal={{ delay: 150, y: 40, duration: 1100 }} class="container mx-auto mt-12 px-4 sm:px-6">
+			<ImageGallery images={galleryImages} label="{data.event.title} photos" />
+		</div>
+	</section>
+{/if}

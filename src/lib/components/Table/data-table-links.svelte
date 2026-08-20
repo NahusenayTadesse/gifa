@@ -9,7 +9,7 @@
 		variant = 'ghost',
 		target = ''
 	}: {
-		id: string;
+		id: string | null;
 		name: string;
 		link: string;
 		target?: string;
@@ -22,26 +22,30 @@
 	import { buttonVariants } from '../ui/button/index.js';
 </script>
 
-<Tooltip.Provider>
-	<Tooltip.Root>
-		<Tooltip.Trigger class={buttonVariants({ variant: 'ghost' })}>
-			{#snippet child({ props })}
-				<Button
-					href="{link}/{id}"
-					{target}
-					{variant}
-					{...props}
-					class="wrap-break-words justify-start!  {variant === 'ghost' ? 'pl-0' : ''}"
-				>
-					{#if IconComp}
-						<IconComp class="size-4" />
-					{/if}
-					{name}
-				</Button>
-			{/snippet}
-		</Tooltip.Trigger>
-		<Tooltip.Content class="left-0 justify-self-start">
-			<p class="text-[13px]!">Goto {name}</p>
-		</Tooltip.Content>
-	</Tooltip.Root>
-</Tooltip.Provider>
+{#if id}
+	<Tooltip.Provider>
+		<Tooltip.Root>
+			<Tooltip.Trigger class={buttonVariants({ variant: 'ghost' })}>
+				{#snippet child({ props })}
+					<Button
+						href="{link}/{id}"
+						{target}
+						{variant}
+						{...props}
+						class="wrap-break-words justify-start!  {variant === 'ghost' ? 'pl-0' : ''}"
+					>
+						{#if IconComp}
+							<IconComp class="size-4" />
+						{/if}
+						{name}
+					</Button>
+				{/snippet}
+			</Tooltip.Trigger>
+			<Tooltip.Content class="left-0 justify-self-start">
+				<p class="text-[13px]!">Goto {name}</p>
+			</Tooltip.Content>
+		</Tooltip.Root>
+	</Tooltip.Provider>
+{:else}
+	<span class="wrap-break-words text-muted-foreground">{name}</span>
+{/if}

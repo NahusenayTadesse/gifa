@@ -10,11 +10,12 @@
 	import DarkMode from '$lib/components/DarkMode.svelte';
 	import { Eye, EyeOff } from '@lucide/svelte';
 	import Errors from '$lib/formComponents/Errors.svelte';
+	import { toastOnError } from '$lib/superform-defaults';
 
 	let { data, action = '?/login' }: { data: SuperValidated<Infer<LoginSchema>>; action: string } =
 		$props();
 
-	const { form, errors, enhance, allErrors, message } = superForm(data, {});
+	const { form, errors, enhance, allErrors, message } = superForm(data, { onError: toastOnError });
 
 	import { toast } from 'svelte-sonner';
 	$effect(() => {
@@ -52,7 +53,7 @@
 						bind:value={$form.email}
 						required
 					/>
-					{#if $errors.email}<span class="text-red-500">{$errors.email}</span>{/if}
+					{#if $errors.email}<span class="text-sm text-destructive">{$errors.email}</span>{/if}
 				</div>
 				<div class="grid gap-2">
 					<div class="flex items-center">
@@ -74,7 +75,7 @@
 								class="absolute top-0.5 right-2 h-6 w-6 transition-transform duration-300 ease-in-out"
 							/>
 						</button>
-						{#if $errors.password}<span class="text-red-500">{$errors.password}</span>{/if}
+						{#if $errors.password}<span class="text-sm text-destructive">{$errors.password}</span>{/if}
 					</div>
 				</div>
 				<Button type="submit" class="w-full">Login</Button>

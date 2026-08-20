@@ -34,7 +34,7 @@
 							<AccordionTrigger class="font-heading text-left text-sm tracking-[0.08em] uppercase hover:text-gold-light"
 								>{faq.question}</AccordionTrigger
 							>
-							<AccordionContent class="font-sans text-base text-cream/70">{faq.answer}</AccordionContent>
+							<AccordionContent class="font-sans text-base text-muted-foreground">{faq.answer}</AccordionContent>
 						</AccordionItem>
 					{/each}
 				</Accordion>

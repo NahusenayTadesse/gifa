@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ContentPage from '$lib/dashboard/content-page.svelte';
 	import { renderComponent } from '$lib/components/ui/data-table/index.js';
-	import { column, deleteColumn, indexColumn, longColumn } from '$lib/dashboard/columns';
+	import { column, deleteColumn, indexColumn, longColumn, reorderColumn } from '$lib/dashboard/columns';
 	import CrudDialog, { type CrudField } from '$lib/components/Table/crud-dialog.svelte';
 	import ToggleAvailability from './toggle-availability.svelte';
 
@@ -32,19 +32,13 @@
 		{ name: 'sortOrder', label: 'Display order', type: 'number' }
 	]);
 
-	const categoryName = (id: number) => data.categories.find((c: any) => c.id === id)?.name ?? '—';
-
 	const priceColumn = {
 		accessorKey: 'price',
 		header: 'Price',
 		cell: ({ row }: any) => `£${(row.original.price / 100).toFixed(2)}`
 	};
 
-	const categoryColumn = {
-		accessorKey: 'categoryId',
-		header: 'Category',
-		cell: ({ row }: any) => categoryName(row.original.categoryId)
-	};
+	const categoryColumn = column('categoryName', 'Category');
 
 	const availabilityColumn = {
 		id: 'available',
@@ -91,6 +85,7 @@
 
 	const columns = $derived([
 		indexColumn,
+		reorderColumn(data.rows, data.reorderForm),
 		categoryColumn,
 		column('name', 'Name'),
 		priceColumn,
@@ -111,4 +106,5 @@
 	{fields}
 	{columns}
 	rows={data.rows}
+	filterKeys={['categoryName', 'isAvailable', 'isVegan', 'isSpicy', 'isSignature']}
 />

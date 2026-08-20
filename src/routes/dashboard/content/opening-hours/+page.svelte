@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
+	import { toastOnError } from '$lib/superform-defaults';
 	import { toast } from 'svelte-sonner';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Checkbox } from '$lib/components/ui/checkbox';
@@ -14,7 +15,8 @@
 
 	const { form, allErrors, enhance, delayed, message } = superForm(data.form, {
 		resetForm: false,
-		dataType: 'json'
+		dataType: 'json',
+		onError: toastOnError
 	});
 
 	$effect(() => {

@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { superValidate, message } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
-import { getEventBySlug, getSettings } from '$lib/server/content';
+import { getEventBySlug, getEventGallery, getSettings } from '$lib/server/content';
 import { db } from '$lib/server/db';
 import { eventRegistrations } from '$lib/server/db/schema';
 import {
@@ -16,9 +16,12 @@ export const load: PageServerLoad = async ({ params }) => {
 	const event = await getEventBySlug(params.slug);
 	if (!event) error(404, 'Event not found');
 
-	const form = await superValidate(zod4(registrationSchema));
+	const [form, gallery] = await Promise.all([
+		superValidate(zod4(registrationSchema)),
+		getEventGallery(event.id)
+	]);
 
-	return { event, form };
+	return { event, form, gallery };
 };
 
 export const actions: Actions = {

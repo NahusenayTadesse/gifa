@@ -29,7 +29,7 @@ export async function saveUploadedFile(file: File): Promise<string> {
 	const nodeStream = Readable.fromWeb(webStream as any);
 
 	await pipeline(nodeStream, fs.createWriteStream(target));
-	invalidateStatCache(path.resolve(FILES_DIR, target));
+	invalidateStatCache(path.resolve(FILES_DIR, fileName));
 
 	return fileName; // store this string in your DB
 }

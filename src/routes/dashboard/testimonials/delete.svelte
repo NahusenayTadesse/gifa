@@ -8,6 +8,7 @@
 
 	import type { Infer, SuperValidated } from 'sveltekit-superforms';
 	import { superForm } from 'sveltekit-superforms';
+	import { toastOnError } from '$lib/superform-defaults';
 	import Errors from '$lib/formComponents/Errors.svelte';
 	import InputComp from '$lib/formComponents/InputComp.svelte';
 
@@ -22,7 +23,8 @@
 	} = $props();
 
 	const { form, errors, enhance, delayed, message, allErrors } = superForm(data, {
-		resetForm: false
+		resetForm: false,
+		onError: toastOnError
 	});
 	import { toast } from 'svelte-sonner';
 

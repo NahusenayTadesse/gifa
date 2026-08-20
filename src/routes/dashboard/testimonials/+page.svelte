@@ -85,7 +85,7 @@
 				return renderComponent(DataTableLinks, {
 					id: row.original.createdById,
 					name: row.original.createdBy,
-					link: '/dashboard/users'
+					link: '/dashboard/admin-panel/users'
 				});
 			}
 		},
@@ -124,11 +124,12 @@
 	];
 	let { data } = $props();
 	import { superForm } from 'sveltekit-superforms/client';
+	import { toastOnError } from '$lib/superform-defaults';
 	import InputComp from '$lib/formComponents/InputComp.svelte';
 	import LoadingBtn from '$lib/formComponents/LoadingBtn.svelte';
 	import { Plus } from '@lucide/svelte';
 
-	const { form, errors, enhance, delayed, message } = superForm(data.form, {});
+	const { form, errors, enhance, delayed, message } = superForm(data.form, { onError: toastOnError });
 
 	import { toast } from 'svelte-sonner';
 	$effect(() => {

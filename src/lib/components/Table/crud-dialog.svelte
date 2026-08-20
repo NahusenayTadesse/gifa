@@ -23,6 +23,7 @@
 	import LoadingBtn from '$lib/formComponents/LoadingBtn.svelte';
 	import { Save, Plus, SquarePen } from '@lucide/svelte';
 	import { superForm } from 'sveltekit-superforms';
+	import { toastOnError } from '$lib/superform-defaults';
 	import { toast } from 'svelte-sonner';
 
 	let {
@@ -55,7 +56,8 @@
 	const { form, errors, enhance, delayed, message, allErrors } = superForm(data, {
 		resetForm: !editing,
 		// Each row renders its own dialog, so they must not share form state.
-		id: formId
+		id: formId,
+		onError: toastOnError
 	});
 
 	// Prefill once at construction, the same way the testimonials dialog does.

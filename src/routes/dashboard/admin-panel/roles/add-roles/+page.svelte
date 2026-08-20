@@ -5,6 +5,7 @@
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import { createRoleSchema } from './schema';
 	import { superForm } from 'sveltekit-superforms/client';
+	import { toastOnError } from '$lib/superform-defaults';
 	import LoadingBtn from '$lib/formComponents/LoadingBtn.svelte';
 	import Errors from '$lib/formComponents/Errors.svelte';
 
@@ -15,7 +16,8 @@
 		{
 			dataType: 'json',
 
-			validators: zod4Client(createRoleSchema)
+			validators: zod4Client(createRoleSchema),
+			onError: toastOnError
 		}
 	);
 

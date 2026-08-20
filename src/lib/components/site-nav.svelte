@@ -2,12 +2,13 @@
 	import { page } from '$app/state';
 	import { Menu, X } from '@lucide/svelte';
 	import { navLinks as links } from '$lib/nav-links';
+	import ThemeToggle from '$lib/components/theme-toggle.svelte';
 
 	let open = $state(false);
 </script>
 
 <header
-	class="border-gold/15 bg-void/85 sticky top-0 z-50 border-b backdrop-blur-lg supports-[backdrop-filter]:bg-background/70"
+	class="border-gold/15 bg-void/85 sticky top-0 z-50 border-b backdrop-blur-lg supports-[backdrop-filter]:bg-void/70"
 >
 	<nav class="container mx-auto flex h-20 items-center justify-between px-4 sm:px-6">
 		<a href="/" class="flex items-center gap-3.5">
@@ -39,9 +40,11 @@
 			>
 				Reserve
 			</a>
+			<ThemeToggle class="text-gold hover:bg-gold/10 hover:text-gold-light" />
 		</div>
 
 		<div class="flex items-center gap-1 md:hidden">
+			<ThemeToggle class="text-gold hover:bg-gold/10 hover:text-gold-light" />
 			<button class="text-gold p-2" aria-label="Toggle menu" onclick={() => (open = !open)}>
 				{#if open}
 					<X class="size-6" />

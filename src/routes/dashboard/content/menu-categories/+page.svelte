@@ -1,6 +1,13 @@
 <script lang="ts">
 	import ContentPage from '$lib/dashboard/content-page.svelte';
-	import { column, deleteColumn, editColumn, indexColumn, longColumn } from '$lib/dashboard/columns';
+	import {
+		column,
+		deleteColumn,
+		editColumn,
+		indexColumn,
+		longColumn,
+		reorderColumn
+	} from '$lib/dashboard/columns';
 	import type { CrudField } from '$lib/components/Table/crud-dialog.svelte';
 
 	let { data } = $props();
@@ -20,6 +27,7 @@
 
 	const columns = [
 		indexColumn,
+		reorderColumn(data.rows, data.reorderForm),
 		column('name', 'Name'),
 		column('slug', 'Slug'),
 		column('type', 'Menu'),
@@ -37,10 +45,11 @@
 
 <ContentPage
 	title="Menu Categories"
-	description="Sections of the public menu page, e.g. Breakfast, Lamb, Cocktails. 'Menu' decides whether it renders under Food or Drinks."
+	description="Sections of the public menu page, e.g. Breakfast, Lamb, Cocktails. 'Menu' decides whether it renders under Food or Drinks. Use the arrows to set the order sections appear on the public menu."
 	addTitle="Add Category"
 	addForm={data.addForm}
 	{fields}
 	{columns}
 	rows={data.rows}
+	filterKeys={['type']}
 />

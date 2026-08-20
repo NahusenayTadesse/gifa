@@ -4,6 +4,7 @@ import BigText from '$lib/components/Table/bigText.svelte';
 import ImageViewer from '$lib/components/Table/image-viewer.svelte';
 import CrudDialog, { type CrudField } from '$lib/components/Table/crud-dialog.svelte';
 import CrudDelete from '$lib/components/Table/crud-delete.svelte';
+import ReorderButtons from '$lib/components/Table/reorder-buttons.svelte';
 
 /**
  * Column builders shared by every content page, so a route only has to say
@@ -104,6 +105,28 @@ export const editColumn = ({
 			values,
 			existing,
 			iconOnly: true
+		});
+	}
+});
+
+/**
+ * Up/down arrows that swap a row's `sortOrder` with its neighbour, so
+ * reordering a list doesn't mean retyping numbers in the edit dialog.
+ * `rows` must be the same server-ordered array passed to the table, so
+ * "first"/"last" reflect the saved order rather than whatever column the
+ * admin last clicked to sort by.
+ */
+export const reorderColumn = (rows: any[], data: any) => ({
+	id: 'reorder',
+	header: 'Reorder',
+	enableSorting: false,
+	cell: ({ row }: any) => {
+		const index = rows.findIndex((r) => r.id === row.original.id);
+		return renderComponent(ReorderButtons, {
+			data,
+			id: row.original.id,
+			isFirst: index <= 0,
+			isLast: index === -1 || index === rows.length - 1
 		});
 	}
 });

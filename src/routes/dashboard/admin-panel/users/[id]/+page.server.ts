@@ -1,12 +1,11 @@
-import { message, superValidate } from 'sveltekit-superforms';
+import { fail, message, setError, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { editUserSchema as schema } from './schema';
 
 import { db } from '$lib/server/db';
 import { roles, user, permissions, rolePermissions, session } from '$lib/server/db/schema';
-import { eq, and, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import type { Actions, PageServerLoad } from './$types';
-import { fail } from 'sveltekit-superforms';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { error } from '@sveltejs/kit';
 
@@ -108,11 +107,12 @@ export const actions: Actions = {
 			await db.delete(session).where(eq(session.userId, id));
 
 			// Stay on the same page and set a flash message
-			setFlash({ type: 'success', message: 'User Updated Successuflly Added' }, cookies);
+			setFlash({ type: 'success', message: 'User Updated Successfully' }, cookies);
 			return message(form, { type: 'success', text: 'User Updated Successfully' });
 		} catch (err) {
-			setFlash({ type: 'error', message: 'User Update Failed: ' + err?.message }, cookies);
-			return message(form, { type: 'error', text: 'User Update Failed ' + err?.message });
+			console.error('Failed to update user:', err);
+			setFlash({ type: 'error', message: 'Could not update user. Please try again.' }, cookies);
+			return message(form, { type: 'error', text: 'Could not update user. Please try again.' });
 		}
 	},
 	delete: async ({ cookies, params }) => {
@@ -120,7 +120,7 @@ export const actions: Actions = {
 
 		try {
 			if (!id) {
-				setFlash({ type: 'error', message: `Unexpected Error: ${err?.message}` }, cookies);
+				setFlash({ type: 'error', message: 'Unexpected Error: missing user id' }, cookies);
 				return fail(400);
 			}
 
@@ -129,8 +129,8 @@ export const actions: Actions = {
 			setFlash({ type: 'success', message: 'User Deleted Successfully!' }, cookies);
 		} catch (err) {
 			console.error('Error deleting user:', err);
-			setFlash({ type: 'error', message: `Unexpected Error: ${err?.message}` }, cookies);
-			return message(form, { type: 'error', text: 'Unexpected Error: ' + err?.message });
+			setFlash({ type: 'error', message: 'Could not delete user. Please try again.' }, cookies);
+			return fail(500);
 		}
 	}
 };

@@ -57,7 +57,7 @@
 	</section>
 {/if}
 
-<section class="py-20">
+<section class="py-14 sm:py-20">
 	<div class="container mx-auto px-4 sm:px-6">
 		<SectionHeading title="What you get" />
 		<div class="mx-auto mt-12 grid max-w-3xl gap-4 sm:grid-cols-2">
@@ -74,7 +74,7 @@
 	</div>
 </section>
 
-<section class="relative isolate overflow-hidden py-20">
+<section class="relative isolate overflow-hidden py-14 sm:py-20">
 	<div class="spotlight" style="--spot-x: 20%; --spot-y: 60%"></div>
 	<div class="container mx-auto px-4 sm:px-6">
 		<SectionHeading title="How it works" />

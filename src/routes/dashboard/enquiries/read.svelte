@@ -2,6 +2,7 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import LoadingBtn from '$lib/formComponents/LoadingBtn.svelte';
 	import { superForm } from 'sveltekit-superforms';
+	import { toastOnError } from '$lib/superform-defaults';
 	import { toast } from 'svelte-sonner';
 	import { CircleCheckBig } from '@lucide/svelte';
 
@@ -9,7 +10,8 @@
 
 	const { form, enhance, delayed, message } = superForm(data, {
 		resetForm: false,
-		id: `seen-${id}`
+		id: `seen-${id}`,
+		onError: toastOnError
 	});
 
 	$form.id = id;

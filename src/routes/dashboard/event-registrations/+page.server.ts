@@ -37,10 +37,17 @@ export const actions: Actions = {
 		if (!form.valid) return fail(400, { form });
 
 		try {
-			await db
+			const [result] = await db
 				.update(eventRegistrations)
 				.set({ status: form.data.status })
 				.where(eq(eventRegistrations.id, form.data.id));
+			if (result.affectedRows === 0) {
+				return message(
+					form,
+					{ type: 'error', text: 'That registration no longer exists' },
+					{ status: 404 }
+				);
+			}
 			return message(form, { type: 'success', text: 'Registration updated' });
 		} catch (err) {
 			console.error('Failed to update event registration:', err);
@@ -53,7 +60,16 @@ export const actions: Actions = {
 		if (!form.valid) return fail(400, { form });
 
 		try {
-			await db.delete(eventRegistrations).where(eq(eventRegistrations.id, form.data.id));
+			const [result] = await db
+				.delete(eventRegistrations)
+				.where(eq(eventRegistrations.id, form.data.id));
+			if (result.affectedRows === 0) {
+				return message(
+					form,
+					{ type: 'error', text: 'That registration was already deleted' },
+					{ status: 404 }
+				);
+			}
 			return message(form, { type: 'success', text: 'Registration deleted' });
 		} catch (err) {
 			console.error('Failed to delete event registration:', err);

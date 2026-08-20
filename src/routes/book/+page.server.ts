@@ -57,6 +57,21 @@ export const actions: Actions = {
 			);
 		}
 
+		// Same-day bookings still need to be for a time that hasn't passed yet.
+		if (requested.getTime() === today.getTime()) {
+			const [hours, minutes] = bookingTime.split(':').map(Number);
+			const requestedDateTime = new Date();
+			requestedDateTime.setHours(hours, minutes, 0, 0);
+
+			if (Number.isNaN(requestedDateTime.getTime()) || requestedDateTime < new Date()) {
+				return message(
+					form,
+					{ type: 'error', text: "That time's already passed today — please choose a later time." },
+					{ status: 400 }
+				);
+			}
+		}
+
 		if (partySize > 12) {
 			return message(form, {
 				type: 'error',

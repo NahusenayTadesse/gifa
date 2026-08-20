@@ -6,7 +6,8 @@
 		editColumn,
 		imageColumn,
 		indexColumn,
-		longColumn
+		longColumn,
+		reorderColumn
 	} from '$lib/dashboard/columns';
 	import type { CrudField } from '$lib/components/Table/crud-dialog.svelte';
 
@@ -29,6 +30,7 @@
 
 	const columns = [
 		indexColumn,
+		reorderColumn(data.rows, data.reorderForm),
 		imageColumn('posterImage', 'Poster'),
 		column('title', 'Title'),
 		column('eventType', 'Type'),
@@ -66,4 +68,5 @@
 	{fields}
 	{columns}
 	rows={data.rows}
+	filterKeys={['eventType', 'isPublished']}
 />

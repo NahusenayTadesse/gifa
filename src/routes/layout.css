@@ -25,10 +25,15 @@
 
 /* ---------------------------------------------------------------------------
    Gifa Lounge — palette taken from the client's design.html: gold foil and
-   burgundy on a near-black room, not a navy-tech dark mode. Light mode below
-   is left as the old admin palette (the dashboard's own toggle uses it); the
-   public site is dark-only (see the hardcoded `.dark` in +layout.svelte) and
-   gets the full client palette in the `.dark` block.
+   burgundy, dark or light. `:root` below is untouched and still belongs to
+   the dashboard's own light mode (its own toggle uses it as-is). The public
+   site never reads `:root` directly — its wrapper div in +layout.svelte
+   always carries either `.dark` (the room after dark: gold and burgundy on
+   near-black) or `.site-light` (the room by daylight: the same gold and
+   burgundy on warm parchment), switched live by the public theme toggle in
+   the nav. Every brand variable — --void, --gold, --burgundy, --cream, etc. —
+   is fully redefined in both scopes, so component classes built on them
+   (bg-void, text-cream, .atmosphere, .eyebrow, ...) adapt automatically.
 --------------------------------------------------------------------------- */
 
 :root {
@@ -121,6 +126,54 @@
 	--sidebar-accent-foreground: oklch(0.95 0.015 85);
 	--sidebar-border: oklch(0.82 0.15 88 / 16%);
 	--sidebar-ring: oklch(0.82 0.15 88);
+}
+
+/* The room by daylight. Applied to the public site's wrapper div instead of
+   `.dark` when the visitor picks light mode (see ThemeToggle in site-nav).
+   Only the semantic tokens change here — warm parchment and terracotta in
+   place of the old admin palette that `:root` still carries for the
+   dashboard. The brand constants (--void, --gold, --cream, --burgundy, ...)
+   are deliberately left undefined: they cascade down from `:root` (--gold,
+   --gold-bright, --gold-deep, --ink already live there) or fall back to
+   their literal dark values in `@theme inline` below, which is exactly what
+   nav/footer chrome and hero photo scrims want — those stay a dark,
+   lit-room accent against the warm page regardless of theme, the way a dark
+   header bar or a lit photograph would in any daylight room. `.atmosphere`
+   is the one exception: it wraps actual reading content (menu boards, the
+   dish grid, FAQs), so it gets its own light-mode override further down in
+   this file rather than inheriting the dark fallback — see the comment
+   above `.atmosphere`. Any text placed inside an `.atmosphere` section must
+   use a semantic token (text-foreground, text-muted-foreground) rather than
+   the brand literals (text-cream, text-champagne), which assume the dark
+   fallback and go unreadable once the section itself turns light. --ink is
+   the one constant worth overriding here, so photo
+   scrims tint warm umber instead of the dashboard's cool blue-grey. */
+.site-light {
+	--ink: oklch(0.22 0.045 55);
+
+	--background: oklch(0.97 0.018 75);
+	--foreground: oklch(0.24 0.03 45);
+	--card: oklch(0.995 0.012 75);
+	--card-foreground: oklch(0.24 0.03 45);
+	--popover: oklch(0.995 0.012 75);
+	--popover-foreground: oklch(0.24 0.03 45);
+	--primary: oklch(0.53 0.12 48);
+	--primary-foreground: oklch(0.99 0.01 75);
+	--secondary: oklch(0.9 0.035 55);
+	--secondary-foreground: oklch(0.26 0.03 45);
+	--muted: oklch(0.94 0.02 65);
+	--muted-foreground: oklch(0.46 0.03 50);
+	--accent: oklch(0.87 0.05 40);
+	--accent-foreground: oklch(0.24 0.03 45);
+	--destructive: oklch(0.55 0.22 27);
+	--border: oklch(0.83 0.035 55);
+	--input: oklch(0.83 0.035 55);
+	--ring: var(--primary);
+	--chart-1: oklch(0.75 0.11 70);
+	--chart-2: oklch(0.6 0.13 55);
+	--chart-3: oklch(0.5 0.14 40);
+	--chart-4: oklch(0.42 0.12 25);
+	--chart-5: oklch(0.32 0.08 20);
 }
 
 @theme inline {
@@ -234,7 +287,7 @@
 			120deg,
 			var(--gold) 0%,
 			var(--gold-bright) 25%,
-			var(--gold-light) 50%,
+			var(--gold-light, #f4d47c) 50%,
 			var(--gold-bright) 75%,
 			var(--gold) 100%
 		);
@@ -376,24 +429,45 @@
 
 /* ---------------------------------------------------------------------------
    Lounge atmosphere
-   The public site is dark-only (see the hardcoded `.dark` on its root wrapper
-   in +layout.svelte) — these utilities are what turn "dark theme" into "the
-   room after 9pm": gold-and-burgundy glow pooling out of a near-black floor,
-   a soft moving spotlight behind hero copy, and a whisper of film grain so
-   flat colour fields don't read as a UI kit. Use sparingly.
+   Nav, footer and hero photography stay this dark regardless of theme (see
+   the comment above `.site-light` in the palette block) — but `.atmosphere`
+   itself is content-section chrome (menu boards, the dish grid, FAQs), so it
+   gets its own light-mode wash below rather than inheriting the dark-only
+   fallback: gold-and-burgundy glow pooling out of a near-black floor at
+   night, the same glow pooling out of warm parchment by day. A soft moving
+   spotlight behind hero copy and a whisper of film grain round out the "room
+   after 9pm" feel elsewhere on the page. Use sparingly.
 --------------------------------------------------------------------------- */
 
 @layer components {
 	/* The multi-glow room wash from design.html's `.hero`/section
 	   backgrounds — gold top-left, burgundy bottom-right, gold underfoot,
 	   over a vertical deep-to-void-to-shadow base. Apply to a section in
-	   place of a flat bg colour. */
+	   place of a flat bg colour. Falls back to the dark literals below when
+	   neither `.dark` nor `.site-light` is an ancestor (--deep/--void/--shadow
+	   are only ever defined inside `.dark`) — `.site-light` overrides the
+	   whole thing with a daylight version just below. */
 	.atmosphere {
 		background:
 			radial-gradient(ellipse 900px 700px at 20% 30%, color-mix(in oklab, var(--gold) 14%, transparent), transparent 60%),
-			radial-gradient(ellipse 700px 500px at 85% 75%, color-mix(in oklab, var(--burgundy-glow) 35%, transparent), transparent 55%),
+			radial-gradient(ellipse 700px 500px at 85% 75%, color-mix(in oklab, var(--burgundy-glow, #6a1e2a) 35%, transparent), transparent 55%),
 			radial-gradient(ellipse 500px 400px at 50% 100%, color-mix(in oklab, var(--gold) 10%, transparent), transparent 60%),
-			linear-gradient(180deg, var(--deep) 0%, var(--void) 50%, var(--shadow) 100%);
+			linear-gradient(
+				180deg,
+				var(--deep, #0d0705) 0%,
+				var(--void, #050303) 50%,
+				var(--shadow, #180b08) 100%
+			);
+	}
+
+	/* Daylight version: the same gold/burgundy glow, pooling out of warm
+	   parchment instead of a near-black floor. */
+	.site-light .atmosphere {
+		background:
+			radial-gradient(ellipse 900px 700px at 20% 30%, color-mix(in oklab, var(--gold) 16%, transparent), transparent 60%),
+			radial-gradient(ellipse 700px 500px at 85% 75%, color-mix(in oklab, oklch(0.52 0.14 40) 20%, transparent), transparent 55%),
+			radial-gradient(ellipse 500px 400px at 50% 100%, color-mix(in oklab, var(--gold) 12%, transparent), transparent 60%),
+			linear-gradient(180deg, oklch(0.965 0.02 75) 0%, oklch(0.95 0.024 68) 50%, oklch(0.965 0.02 75) 100%);
 	}
 
 	/* Warm halo behind gold CTAs and active controls — the glow a low bulb

@@ -22,10 +22,17 @@ export const actions: Actions = {
 		if (!form.valid) return fail(400, { form });
 
 		try {
-			await db
+			const [result] = await db
 				.update(bookings)
 				.set({ status: form.data.status })
 				.where(eq(bookings.id, form.data.id));
+			if (result.affectedRows === 0) {
+				return message(
+					form,
+					{ type: 'error', text: 'That booking no longer exists' },
+					{ status: 404 }
+				);
+			}
 			return message(form, { type: 'success', text: 'Booking updated' });
 		} catch (err) {
 			console.error('Failed to update booking:', err);
@@ -38,7 +45,14 @@ export const actions: Actions = {
 		if (!form.valid) return fail(400, { form });
 
 		try {
-			await db.delete(bookings).where(eq(bookings.id, form.data.id));
+			const [result] = await db.delete(bookings).where(eq(bookings.id, form.data.id));
+			if (result.affectedRows === 0) {
+				return message(
+					form,
+					{ type: 'error', text: 'That booking was already deleted' },
+					{ status: 404 }
+				);
+			}
 			return message(form, { type: 'success', text: 'Booking deleted' });
 		} catch (err) {
 			console.error('Failed to delete booking:', err);

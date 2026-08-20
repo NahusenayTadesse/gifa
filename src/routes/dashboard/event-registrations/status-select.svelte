@@ -1,6 +1,7 @@
 <script lang="ts">
 	import * as Select from '$lib/components/ui/select/index.js';
 	import { superForm } from 'sveltekit-superforms';
+	import { toastOnError } from '$lib/superform-defaults';
 	import { toast } from 'svelte-sonner';
 
 	let { data, id, status }: { data: any; id: number; status: string } = $props();
@@ -14,7 +15,8 @@
 	const { form, enhance, message, submit } = superForm(data, {
 		resetForm: false,
 		invalidateAll: true,
-		id: `status-${id}`
+		id: `status-${id}`,
+		onError: toastOnError
 	});
 
 	$form.id = id;

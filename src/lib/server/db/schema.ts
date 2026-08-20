@@ -135,6 +135,22 @@ export const eventRegistrations = mysqlTable('event_registrations', {
 	createdAt: timestamp('created_at').defaultNow().notNull()
 });
 
+/**
+ * Extra photos for one event, shown at the bottom of its page — separate
+ * from `events.posterImage` (the single hero image). Deliberately a plain
+ * relational table rather than a JSON array column: no per-photo metadata
+ * needed, and JSON columns are more trouble than they're worth on MariaDB
+ * in production.
+ */
+export const eventGallery = mysqlTable('event_gallery', {
+	id: int('id').primaryKey().autoincrement(),
+	eventId: int('event_id')
+		.notNull()
+		.references(() => events.id, { onDelete: 'cascade' }),
+	imageUrl: varchar('image_url', { length: 255 }).notNull(),
+	createdAt: timestamp('created_at').defaultNow().notNull()
+});
+
 // --- Opening hours ---
 
 export const openingHours = mysqlTable('opening_hours', {

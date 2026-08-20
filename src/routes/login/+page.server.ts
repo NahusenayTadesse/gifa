@@ -1,22 +1,20 @@
-// import { encodeBase32LowerCase } from '@oslojs/encoding';
-
 import type { Actions, PageServerLoad } from './$types';
 import { message, setError, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { loginSchema } from './schema';
 import { redirect } from 'sveltekit-flash-message/server';
 import { auth } from '$lib/server/auth';
+import { APIError } from 'better-auth';
 
-export const load: PageServerLoad = async ({ locals, parent }) => {
+export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.user) {
-	     return redirect(302, '/dashboard');
+		return redirect(302, '/dashboard');
 	}
-	
+
 	const form = await superValidate(zod4(loginSchema));
 
 	return { form };
 };
-import { APIError } from 'better-auth';
 
 export const actions: Actions = {
 	login: async (event) => {
@@ -26,10 +24,10 @@ export const actions: Actions = {
 				form,
 				{
 					type: 'error',
-					text: 'Please Check the form}'
+					text: 'Please check the form'
 				},
 				{
-					status: 500
+					status: 400
 				}
 			);
 		}
@@ -40,8 +38,7 @@ export const actions: Actions = {
 			const result = await auth.api.signInEmail({
 				body: {
 					email,
-					password,
-					callbackURL: '/auth/verification-success'
+					password
 				}
 			});
 
@@ -55,15 +52,10 @@ export const actions: Actions = {
 						text: 'An error occurred while logging in'
 					},
 					{
-						status: 500
+						status: 401
 					}
 				);
 			}
-
-			return message(form, {
-				type: 'success',
-				text: 'Sign Up Successful!'
-			});
 		} catch (error) {
 			if (error instanceof APIError) {
 				return message(
@@ -73,7 +65,7 @@ export const actions: Actions = {
 						text: error?.message
 					},
 					{
-						status: 500
+						status: 401
 					}
 				);
 			}
@@ -81,12 +73,14 @@ export const actions: Actions = {
 				form,
 				{
 					type: 'error',
-					text: 'Registration Failed'
+					text: 'Login Failed'
 				},
 				{
 					status: 500
 				}
 			);
 		}
+
+		return redirect(302, '/dashboard', { type: 'success', message: 'Signed in successfully' }, event.cookies);
 	}
 };

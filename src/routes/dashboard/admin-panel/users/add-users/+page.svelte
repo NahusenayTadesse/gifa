@@ -6,6 +6,7 @@
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import { add } from './schema';
 	import { superForm } from 'sveltekit-superforms/client';
+	import { toastOnError } from '$lib/superform-defaults';
 	import LoadingBtn from '$lib/formComponents/LoadingBtn.svelte';
 	import InputComp from '$lib/formComponents/InputComp.svelte';
 	import Errors from '$lib/formComponents/Errors.svelte';
@@ -21,7 +22,8 @@
 				});
 			},
 
-			validators: zod4Client(add)
+			validators: zod4Client(add),
+			onError: toastOnError
 		}
 	);
 

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms';
+	import { toastOnError } from '$lib/superform-defaults';
 	import { toast } from 'svelte-sonner';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import FormCard from '$lib/formComponents/FormCard.svelte';
@@ -11,7 +12,8 @@
 	let { data } = $props();
 
 	const { form, errors, allErrors, enhance, delayed, message } = superForm(data.form, {
-		resetForm: false
+		resetForm: false,
+		onError: toastOnError
 	});
 
 	$effect(() => {

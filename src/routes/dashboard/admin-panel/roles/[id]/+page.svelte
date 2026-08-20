@@ -7,6 +7,7 @@
 	import SingleTable from '$lib/components/SingleTable.svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { superForm } from 'sveltekit-superforms/client';
+	import { toastOnError } from '$lib/superform-defaults';
 
 	import LoadingBtn from '$lib/formComponents/LoadingBtn.svelte';
 	import { ArrowLeft, Pencil, Save, Trash } from '@lucide/svelte';
@@ -30,7 +31,7 @@
 			name: 'User Count',
 			value: data?.singleUser?.userCount || 0
 		},
-		{ name: 'Permission Count', value: data?.permissionList?.length || 0 }
+		{ name: 'Permission Count', value: data?.singleUser?.permissionsCount || 0 }
 	]);
 
 	const { form, errors, enhance, delayed, capture, restore, allErrors, message } = superForm(
@@ -38,7 +39,8 @@
 		{
 			validators: zod4Client(editRoleSchema),
 			dataType: 'json',
-			resetForm: false
+			resetForm: false,
+			onError: toastOnError
 		}
 	);
 
@@ -112,7 +114,7 @@
 					{errors}
 					placeholder="Enter Role Description"
 				/>
-				<InputComp
+				<!-- <InputComp
 					label="Permissions"
 					name="permissions"
 					type="checkbox"
@@ -120,7 +122,7 @@
 					{errors}
 					placeholder="Enter Role Name"
 					items={data?.allPermissions}
-				/>
+				/> -->
 
 				<Button type="submit" class="mt-4" form="main">
 					{#if $delayed}

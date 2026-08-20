@@ -64,16 +64,6 @@
 		</div>
 	</PageHero>
 {/if}
-<!-- {#if data.loungeGallery.length}
-	<section class="py-20">
-		<div class="container mx-auto px-4 sm:px-6">
-			<SectionHeading title="The room, after dark" subtitle="A look at Gifa once the lights go low." />
-		</div>
-		<div use:reveal={{ delay: 200, y: 40, duration: 1100 }} class="container mx-auto mt-12 px-4 sm:px-6">
-			<ImageGallery images={data.loungeGallery} label="The lounge at night" />
-		</div>
-	</section>
-{/if} -->
 <Marquee
 	items={[
 		'Halal kitchen',
@@ -136,7 +126,7 @@
 	</div>
 </section>
 
-<!-- {#if data.dishes.length}
+{#if data.dishes.length}
 	<section class="atmosphere py-24">
 		<div class="container mx-auto px-4 sm:px-6">
 			<SectionHeading
@@ -169,9 +159,7 @@
 			</div>
 		</div>
 	</section>
-{/if} -->
-
-
+{/if}
 
 <!-- Coffee ceremony -->
 <section class="relative isolate overflow-hidden py-28">
@@ -230,6 +218,21 @@
 		</div>
 	</div>
 </section>
+
+{#if data.loungeGallery.length}
+	<section class="py-20">
+		<div class="container mx-auto px-4 sm:px-6">
+			<SectionHeading
+				eyebrow="The Room"
+				title="A table, then a lounge"
+				subtitle="The same room, dressed for the second half of the evening."
+			/>
+		</div>
+		<div use:reveal={{ delay: 200, y: 40, duration: 1100 }} class="container mx-auto mt-12 px-4 sm:px-6">
+			<ImageGallery images={data.loungeGallery} label="Inside Gifa" />
+		</div>
+	</section>
+{/if}
 
 {#if data.events.length}
 	<section class="py-20">

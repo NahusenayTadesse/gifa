@@ -1,6 +1,12 @@
 <script lang="ts">
 	import ContentPage from '$lib/dashboard/content-page.svelte';
-	import { column, deleteColumn, editColumn, indexColumn } from '$lib/dashboard/columns';
+	import {
+		column,
+		deleteColumn,
+		editColumn,
+		indexColumn,
+		reorderColumn
+	} from '$lib/dashboard/columns';
 	import type { CrudField } from '$lib/components/Table/crud-dialog.svelte';
 
 	let { data } = $props();
@@ -22,6 +28,7 @@
 
 	const columns = [
 		indexColumn,
+		reorderColumn(data.rows, data.reorderForm),
 		column('message', 'Message'),
 		column('level', 'Level'),
 		column('startsAt', 'Starts'),
@@ -45,4 +52,5 @@
 	{fields}
 	{columns}
 	rows={data.rows}
+	filterKeys={['level', 'isActive']}
 />

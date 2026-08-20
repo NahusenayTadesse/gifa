@@ -25,8 +25,8 @@
 		<div class="container mx-auto px-4 sm:px-6">
 			<p class="eyebrow text-gold-light mx-auto mb-6">The Kitchen</p>
 			<h1 class="mx-auto max-w-2xl text-4xl md:text-5xl">Our Bill of Fare</h1>
-			<p class="text-champagne mx-auto mt-3 font-sans text-xl italic">handwritten each morning</p>
-			<p class="mx-auto mt-6 max-w-2xl font-sans text-lg text-cream/75">
+			<p class="mx-auto mt-3 font-sans text-xl text-muted-foreground italic">handwritten each morning</p>
+			<p class="mx-auto mt-6 max-w-2xl font-sans text-lg text-muted-foreground">
 				Everything on this menu is halal. Dishes marked Vegan are fully plant-based. Please tell
 				your server about any allergies before ordering — we'll talk you through every dish.
 			</p>
@@ -60,7 +60,7 @@
 						<div id={category.slug} class="scroll-mt-40 {ci > 0 ? 'mt-12' : ''}">
 							<h3 class="text-gold text-center text-xl tracking-[0.16em]">{category.name}</h3>
 							{#if category.description}
-								<p class="mt-2 text-center font-sans text-sm text-cream/60 italic">
+								<p class="mt-2 text-center font-sans text-sm text-muted-foreground italic">
 									{category.description}
 								</p>
 							{/if}
@@ -88,7 +88,7 @@
 						<div id={category.slug} class="scroll-mt-40 {ci > 0 ? 'mt-12' : ''}">
 							<h3 class="text-gold text-center text-xl tracking-[0.16em]">{category.name}</h3>
 							{#if category.description}
-								<p class="mt-2 text-center font-sans text-sm text-cream/60 italic">
+								<p class="mt-2 text-center font-sans text-sm text-muted-foreground italic">
 									{category.description}
 								</p>
 							{/if}

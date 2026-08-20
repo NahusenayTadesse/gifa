@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { superForm } from 'sveltekit-superforms';
+	import { toastOnError } from '$lib/superform-defaults';
 	import { CircleCheck, CircleX } from '@lucide/svelte';
 
 	let { data, id, available }: { data: any; id: number; available: boolean } = $props();
@@ -8,7 +9,8 @@
 	const { form, enhance } = superForm(data, {
 		resetForm: false,
 		invalidateAll: true,
-		id: `avail-${id}`
+		id: `avail-${id}`,
+		onError: toastOnError
 	});
 
 	$form.id = id;

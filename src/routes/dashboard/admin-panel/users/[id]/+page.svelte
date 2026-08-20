@@ -9,6 +9,7 @@
 	import SingleTable from '$lib/components/SingleTable.svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { superForm } from 'sveltekit-superforms/client';
+	import { toastOnError } from '$lib/superform-defaults';
 
 	import LoadingBtn from '$lib/formComponents/LoadingBtn.svelte';
 	import { ArrowLeft, Pencil, Save } from '@lucide/svelte';
@@ -34,7 +35,8 @@
 		data.form,
 		{
 			validators: zod4Client(editUserSchema),
-			resetForm: false
+			resetForm: false,
+			onError: toastOnError
 		}
 	);
 

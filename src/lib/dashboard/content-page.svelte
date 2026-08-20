@@ -1,6 +1,7 @@
 <script lang="ts">
 	import DataTable from '$lib/components/Table/data-table.svelte';
 	import CrudDialog, { type CrudField } from '$lib/components/Table/crud-dialog.svelte';
+	import FilterMenu from '$lib/components/Table/FilterMenu.svelte';
 
 	let {
 		title,
@@ -9,7 +10,9 @@
 		addForm,
 		fields,
 		columns,
-		rows
+		rows,
+		/** Row keys to build "filter by" dropdowns for, e.g. ['context', 'isFeatured']. */
+		filterKeys
 	}: {
 		title: string;
 		/** One line telling the admin where this content shows up on the site. */
@@ -19,7 +22,10 @@
 		fields: CrudField[];
 		columns: any[];
 		rows: any[];
+		filterKeys?: string[];
 	} = $props();
+
+	let filteredRows = $state(rows);
 </script>
 
 <svelte:head>
@@ -36,6 +42,9 @@
 	</div>
 
 	{#key rows}
-		<DataTable {columns} data={rows} search={true} fileName={title} />
+		{#if filterKeys?.length}
+			<FilterMenu data={rows} bind:filteredList={filteredRows} {filterKeys} />
+		{/if}
+		<DataTable {columns} data={filterKeys?.length ? filteredRows : rows} search={true} fileName={title} />
 	{/key}
 </div>

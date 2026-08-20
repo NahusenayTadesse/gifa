@@ -1,6 +1,6 @@
 import { superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
-import { asc, eq } from 'drizzle-orm';
+import { asc, eq, getTableColumns } from 'drizzle-orm';
 import { contentCrud } from '$lib/server/crud';
 import { db } from '$lib/server/db';
 import { menuItems, menuCategories } from '$lib/server/db/schema';
@@ -17,13 +17,19 @@ const crud = contentCrud({
 });
 
 export const load: PageServerLoad = async () => {
-	const [base, categories, toggleForm] = await Promise.all([
+	const [base, categories, toggleForm, rows] = await Promise.all([
 		crud.load(),
 		db.select().from(menuCategories).orderBy(asc(menuCategories.sortOrder)),
-		superValidate(zod4(toggleSchema))
+		superValidate(zod4(toggleSchema)),
+		// Joined so the category shows (and is filterable) by name, not a raw id.
+		db
+			.select({ ...getTableColumns(menuItems), categoryName: menuCategories.name })
+			.from(menuItems)
+			.leftJoin(menuCategories, eq(menuItems.categoryId, menuCategories.id))
+			.orderBy(asc(menuItems.sortOrder))
 	]);
 
-	return { ...base, categories, toggleForm };
+	return { ...base, rows, categories, toggleForm };
 };
 
 export const actions: Actions = {

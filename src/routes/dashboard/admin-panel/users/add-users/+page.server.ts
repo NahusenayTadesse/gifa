@@ -1,5 +1,3 @@
-// import { encodeBase32LowerCase } from '@oslojs/encoding';
-
 import type { Actions, PageServerLoad } from '../$types';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
@@ -26,16 +24,15 @@ export const load: PageServerLoad = async () => {
 export const actions: Actions = {
 	add: async (event) => {
 		const form = await superValidate(event.request, zod4(add));
-		console.log(form);
 		if (!form.valid) {
 			return message(
 				form,
 				{
 					type: 'error',
-					text: 'Please Check the form}'
+					text: 'Please check the form'
 				},
 				{
-					status: 500
+					status: 400
 				}
 			);
 		}
@@ -55,7 +52,7 @@ export const actions: Actions = {
 				await tx
 					.update(user)
 					.set({
-						roleId: 1
+						roleId: role
 					})
 					.where(eq(user.id, newCustomer?.user.id));
 			});
@@ -82,7 +79,7 @@ export const actions: Actions = {
 				form,
 				{
 					type: 'error',
-					text: 'Registration Failed' + error?.message
+					text: 'Failed to add user'
 				},
 				{
 					status: 500

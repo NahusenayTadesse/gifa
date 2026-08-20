@@ -29,7 +29,7 @@
 	{#if subtitle}
 		<p
 			use:reveal={{ delay: 120 }}
-			class="text-champagne mt-4 font-sans text-lg italic opacity-90 md:text-xl"
+			class="mt-4 font-sans text-lg text-muted-foreground italic opacity-90 md:text-xl"
 		>
 			{subtitle}
 		</p>

@@ -97,7 +97,7 @@
 
 {#if fieldErrors.length}
 	{#each fieldErrors as error}
-		<p class="flex items-center gap-2 text-red-500"><CircleAlert /> {error}</p>
+		<p class="flex items-center gap-2 text-sm text-destructive"><CircleAlert class="size-4 shrink-0" /> {error}</p>
 	{/each}
 {/if}
 </div>

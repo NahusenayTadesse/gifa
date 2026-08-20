@@ -23,7 +23,17 @@ export const actions: Actions = {
 		if (!form.valid) return fail(400, { form });
 
 		try {
-			await db.update(enquiries).set({ seen: true }).where(eq(enquiries.id, form.data.id));
+			const [result] = await db
+				.update(enquiries)
+				.set({ seen: true })
+				.where(eq(enquiries.id, form.data.id));
+			if (result.affectedRows === 0) {
+				return message(
+					form,
+					{ type: 'error', text: 'That enquiry no longer exists' },
+					{ status: 404 }
+				);
+			}
 			return message(form, { type: 'success', text: 'Marked as seen' });
 		} catch (err) {
 			console.error('Failed to mark enquiry as seen:', err);
@@ -36,10 +46,17 @@ export const actions: Actions = {
 		if (!form.valid) return fail(400, { form });
 
 		try {
-			await db
+			const [result] = await db
 				.update(enquiries)
 				.set({ status: form.data.status })
 				.where(eq(enquiries.id, form.data.id));
+			if (result.affectedRows === 0) {
+				return message(
+					form,
+					{ type: 'error', text: 'That enquiry no longer exists' },
+					{ status: 404 }
+				);
+			}
 			return message(form, { type: 'success', text: 'Enquiry updated' });
 		} catch (err) {
 			console.error('Failed to update enquiry:', err);
@@ -52,7 +69,14 @@ export const actions: Actions = {
 		if (!form.valid) return fail(400, { form });
 
 		try {
-			await db.delete(enquiries).where(eq(enquiries.id, form.data.id));
+			const [result] = await db.delete(enquiries).where(eq(enquiries.id, form.data.id));
+			if (result.affectedRows === 0) {
+				return message(
+					form,
+					{ type: 'error', text: 'That enquiry was already deleted' },
+					{ status: 404 }
+				);
+			}
 			return message(form, { type: 'success', text: 'Enquiry deleted' });
 		} catch (err) {
 			console.error('Failed to delete enquiry:', err);

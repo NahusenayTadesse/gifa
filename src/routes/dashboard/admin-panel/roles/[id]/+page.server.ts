@@ -51,58 +51,46 @@ export const load: PageServerLoad = async ({ params }) => {
 	};
 };
 
-// import { saveUploadedFile } from '$lib/server/upload';
+export const actions: Actions = {
+	edit: async ({ request, params }) => {
+		const { id } = params;
+		const form = await superValidate(request, zod4(schema));
 
-// export const actions: Actions = {
-// 	edit: async ({ request, params }) => {
-// 		const { id } = params;
-// 		const form = await superValidate(request, zod4(schema));
+		if (!form.valid) {
+			return message(form, { type: 'error', text: 'Please check the form for Errors' });
+		}
 
-// 		if (!form.valid) {
-// 			return message(form, { type: 'error', text: 'Please check the form for Errors' });
-// 		}
+		const { name, description } = form.data;
 
-// 		const { name, description, permissions } = form.data;
+		try {
+			await db
+				.update(roles)
+				.set({ name, description })
+				.where(eq(roles.id, Number(id)));
 
-// 		try {
-// 			await db
-// 				.update(roles)
-// 				.set({ name, description })
-// 				.where(eq(roles.id, Number(id)));
+			return message(form, { type: 'success', text: 'Role updated successfully.' });
+		} catch (err: any) {
+			if (err.code === 'ER_DUP_ENTRY')
+				return setError(form, 'name', 'Role updated already exists.');
 
-// 			await db.delete(rolePermissions).where(eq(rolePermissions.roleId, Number(id)));
+			console.error('Failed to update role:', err);
+			return message(form, {
+				type: 'error',
+				text: 'Could not update role. Please try again.'
+			});
+		}
+	},
+	delete: async ({ params, cookies }) => {
+		const { id } = params;
 
-// 			await db.insert(rolePermissions).values(
-// 				permissions.map((permId) => ({
-// 					roleId: Number(id),
-// 					permissionId: Number(permId)
-// 				}))
-// 			);
+		try {
+			await db.delete(roles).where(eq(roles.id, Number(id)));
 
-// 			return message(form, { type: 'success', text: 'Role updated successfully.' });
-// 		} catch (err: any) {
-// 			if (err.code === 'ER_DUP_ENTRY')
-// 				return setError(form, 'name', 'Role updated already exists.');
-
-// 			return message(form, {
-// 				type: 'error',
-// 				text:
-// 					err.code === 'ER_DUP_ENTRY'
-// 						? 'Role Name is already taken. Please choose another one.'
-// 						: err.message
-// 			});
-// 		}
-// 	},
-// 	delete: async ({ params, cookies }) => {
-// 		const { id } = params;
-
-// 		try {
-// 			await db.delete(roles).where(eq(roles.id, Number(id)));
-
-// 			setFlash({ type: 'success', message: 'Role Deleted Successfully!' }, cookies);
-// 		} catch (err: any) {
-// 			setFlash({ type: 'error', message: `Unexpected Error: ${err?.message}` }, cookies);
-// 			return fail(400);
-// 		}
-// 	}
-// } satisfies Actions;
+			setFlash({ type: 'success', message: 'Role Deleted Successfully!' }, cookies);
+		} catch (err: any) {
+			console.error('Failed to delete role:', err);
+			setFlash({ type: 'error', message: 'Could not delete role. Please try again.' }, cookies);
+			return fail(400);
+		}
+	}
+} satisfies Actions;

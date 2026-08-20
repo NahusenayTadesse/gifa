@@ -13,6 +13,12 @@ export const idSchema = z.object({ id: z.coerce.number() });
 /** Reused by every content form: an integer that decides display order. */
 export const sortOrderField = z.coerce.number().int().min(0).default(0);
 
+/** One row's "move up" / "move down" click. */
+export const reorderSchema = z.object({
+	id: z.coerce.number(),
+	direction: z.enum(['up', 'down'])
+});
+
 /** A content table, plus index access to its columns for the generic helpers. */
 type AnyTable = MySqlTable & Record<string, any>;
 type AnySchema = z.ZodType<any, any>;
@@ -78,15 +84,19 @@ export function contentCrud({
 		return values;
 	};
 
+	/** Only tables with a real `sortOrder` column can be reordered. */
+	const reorderable = Boolean(table.sortOrder);
+
 	const load = async () => {
-		const [addForm, editForm, deleteForm, rows] = await Promise.all([
+		const [addForm, editForm, deleteForm, reorderForm, rows] = await Promise.all([
 			superValidate(zod4(addSchema)),
 			superValidate(zod4(editSchema)),
 			superValidate(zod4(idSchema)),
+			superValidate(zod4(reorderSchema)),
 			db.select().from(table).orderBy(asc(orderColumn))
 		]);
 
-		return { addForm, editForm, deleteForm, rows };
+		return { addForm, editForm, deleteForm, reorderForm, rows };
 	};
 
 	const actions = {
@@ -123,10 +133,17 @@ export function contentCrud({
 			try {
 				const data = form.data as FormData;
 				const values = await toRow(data);
-				await db
+				const [result] = await db
 					.update(table)
 					.set({ ...values, updatedBy: locals.user?.id })
 					.where(eq(table.id, data.id));
+				if (result.affectedRows === 0) {
+					return message(
+						form,
+						{ type: 'error', text: `That ${label.toLowerCase()} no longer exists` },
+						{ status: 404 }
+					);
+				}
 				return message(form, { type: 'success', text: `${label} updated` });
 			} catch (err) {
 				console.error(`Failed to update ${label}:`, err);
@@ -141,11 +158,69 @@ export function contentCrud({
 			}
 
 			try {
-				await db.delete(table).where(eq(table.id, (form.data as FormData).id));
+				const [result] = await db
+					.delete(table)
+					.where(eq(table.id, (form.data as FormData).id));
+				if (result.affectedRows === 0) {
+					return message(
+						form,
+						{ type: 'error', text: `That ${label.toLowerCase()} was already deleted` },
+						{ status: 404 }
+					);
+				}
 				return message(form, { type: 'success', text: `${label} deleted` });
 			} catch (err) {
 				console.error(`Failed to delete ${label}:`, err);
 				return message(form, { type: 'error', text: `Could not delete ${label}` }, { status: 500 });
+			}
+		},
+
+		/** Swaps a row's display order with its neighbour above or below. */
+		reorder: async ({ request }: RequestEvent) => {
+			const form = await superValidate(request, zod4(reorderSchema));
+			if (!form.valid) {
+				return message(form, { type: 'error', text: 'Invalid request' }, { status: 400 });
+			}
+
+			if (!reorderable) {
+				return message(
+					form,
+					{ type: 'error', text: `${label} has no display order` },
+					{ status: 400 }
+				);
+			}
+
+			try {
+				const { id, direction } = form.data as FormData & { direction: 'up' | 'down' };
+				const rows = await db
+					.select({ id: table.id, sortOrder: table.sortOrder })
+					.from(table)
+					.orderBy(asc(orderColumn));
+
+				const index = rows.findIndex((row) => row.id === id);
+				const neighborIndex = direction === 'up' ? index - 1 : index + 1;
+				if (index === -1 || neighborIndex < 0 || neighborIndex >= rows.length) {
+					// Already at the top/bottom — nothing to swap.
+					return message(form, { type: 'success', text: `${label} order unchanged` });
+				}
+
+				const current = rows[index];
+				const neighbor = rows[neighborIndex];
+				await db.transaction(async (tx) => {
+					await tx
+						.update(table)
+						.set({ sortOrder: neighbor.sortOrder })
+						.where(eq(table.id, current.id));
+					await tx
+						.update(table)
+						.set({ sortOrder: current.sortOrder })
+						.where(eq(table.id, neighbor.id));
+				});
+
+				return message(form, { type: 'success', text: `${label} order updated` });
+			} catch (err) {
+				console.error(`Failed to reorder ${label}:`, err);
+				return message(form, { type: 'error', text: `Could not reorder ${label}` }, { status: 500 });
 			}
 		}
 	};

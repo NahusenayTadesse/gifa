@@ -7,7 +7,7 @@
 	<div
 		role="alert"
 		aria-live="assertive"
-		class="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-red-800"
+		class="mb-4 rounded-lg bg-destructive/15 p-3 text-destructive"
 	>
 		<div class="flex items-center justify-between">
 			<strong class="text-sm font-semibold">Please fix the following</strong>

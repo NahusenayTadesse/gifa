@@ -30,16 +30,20 @@
 </svelte:head>
 
 <ModeWatcher />
-<Toaster theme={isDashboard ? mode.current : 'dark'} richColors closeButton position="top-right" />
+<Toaster theme={mode.current} richColors closeButton position="top-right" />
 
 {#if isDashboard}
 	{@render children?.()}
 {:else}
-	<!-- The lounge is dark-only, regardless of system preference or the
-	     dashboard's own light/dark toggle — `.dark` is hardcoded here rather
-	     than left to ModeWatcher's <html> class. -->
+	<!-- The public site has its own light/dark toggle (ThemeToggle, in
+	     site-nav) driven by the same mode-watcher store as the dashboard's.
+	     `.site-light` carries the warm daytime palette; `.dark` the room
+	     after dark — see the comments above both blocks in layout.css. -->
 	<div
-		class="dark grain flex min-h-screen flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground"
+		class={[
+			'grain flex min-h-screen flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground',
+			mode.current === 'dark' ? 'dark' : 'site-light'
+		]}
 	>
 		<AnnouncementBanner announcements={data.announcements ?? []} />
 		<SiteNav />
