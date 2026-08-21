@@ -90,9 +90,9 @@
 </section>
 
 <!-- Our food -->
-<section class="atmosphere py-20">
+<section class="atmosphere py-8 lg:py-20">
 	<div class="container mx-auto px-4 sm:px-6">
-		<div class="grid items-center gap-12 lg:grid-cols-2">
+		<div class="grid items-center lg:gap-12 gap-4 lg:grid-cols-2">
 			<div>
 				<SectionHeading title="Food that takes its time" align="start" rule />
 				<p use:reveal={{ delay: 120 }} class="mt-6 text-lg text-muted-foreground">
@@ -134,7 +134,7 @@
 				title="Plates that define the kitchen"
 				subtitle="A few of the dishes people keep coming back for."
 			/>
-			<div class="mt-16 grid gap-8 sm:grid-cols-3 sm:items-stretch">
+			<div class="lg:mt-16 mt-4 grid gap-8 sm:grid-cols-3 sm:items-stretch">
 				{#each data.dishes as dish, i (dish.id)}
 					<div use:reveal={{ delay: stagger(i, 100), y: 24, scale: 0.97 }} class="group relative h-full p-2">
 						<div class="frame-corners border-gold/25 bg-linear-to-b from-shadow/90 to-deep/90 relative flex h-full flex-col border p-px transition-colors group-hover:border-gold/60">
@@ -228,7 +228,7 @@
 				subtitle="The same room, dressed for the second half of the evening."
 			/>
 		</div>
-		<div use:reveal={{ delay: 200, y: 40, duration: 1100 }} class="container mx-auto mt-12 px-4 sm:px-6">
+		<div use:reveal={{ delay: 200, y: 40, duration: 1100 }} class="container mx-auto lg:mt-12 mt-4 px-4 sm:px-6">
 			<ImageGallery images={data.loungeGallery} label="Inside Gifa" />
 		</div>
 	</section>
@@ -243,10 +243,10 @@
 				subtitle="Live music, DJ nights and coffee ceremonies coming up at the lounge."
 			/>
 		</div>
-		<div use:reveal={{ delay: 200, y: 40, duration: 1100 }} class="container mx-auto mt-12 px-4 sm:px-6">
+		<div use:reveal={{ delay: 200, y: 40, duration: 1100 }} class="container mx-auto lg:mt-12 mt-4 px-4 sm:px-6">
 			<EventsCarousel events={data.events} label="Upcoming events" />
 		</div>
-		<div class="mt-8 text-center">
+		<div class="lg:mt-8 text-center">
 			<Button href="/events" variant="link" class="group gap-1 text-primary">
 				See all events
 				<ArrowRight class="size-4 transition-transform duration-500 group-hover:translate-x-1" />
@@ -262,7 +262,7 @@
 		<div class="container mx-auto px-4 sm:px-6">
 			<SectionHeading title="From the kitchen" subtitle="A taste of what's on the table." />
 		</div>
-		<div use:reveal={{ delay: 200, y: 40, duration: 1100 }} class="container mx-auto mt-12 px-4 sm:px-6">
+		<div use:reveal={{ delay: 200, y: 40, duration: 1100 }} class="container mx-auto lg:mt-12 mt-4 px-4 sm:px-6">
 			<ImageGallery images={data.gallery} label="Food at Gifa" />
 		</div>
 	</section>

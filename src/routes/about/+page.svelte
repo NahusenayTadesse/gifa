@@ -87,7 +87,7 @@
 				</p>
 			</div>
 		</div>
-		<p use:reveal={{ delay: 260 }} class="mx-auto mt-12 max-w-2xl text-center text-muted-foreground">
+		<p use:reveal={{ delay: 260 }} class="mx-auto lg:mt-12 mt-4 max-w-2xl text-center text-muted-foreground">
 			Both are halal, and there's always a full plant-based menu — Eritrean and Ethiopian cooking
 			has been feeding vegans beautifully for centuries, long before anyone called it that.
 		</p>
@@ -119,7 +119,7 @@
 		<div class="container mx-auto px-4 sm:px-6">
 			<SectionHeading title="The room" subtitle="A look inside Gifa." />
 		</div>
-		<div use:reveal={{ delay: 200, y: 40, duration: 1100 }} class="container mx-auto mt-12 px-4 sm:px-6">
+		<div use:reveal={{ delay: 200, y: 40, duration: 1100 }} class="container mx-auto lg:mt-12 mt-4 px-4 sm:px-6">
 			<ImageGallery images={data.gallery} />
 		</div>
 	</section>

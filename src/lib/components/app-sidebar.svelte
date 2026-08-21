@@ -118,7 +118,7 @@
       {bgGradient}"
 	>
 		<!-- Logo header -->
-		<div class="sticky top-0 z-10 border-b border-border/60 bg-sidebar px-4 py-4">
+		<div class="sticky top-0 z-10 border-b border-border/60 px-4 py-4">
 			<a
 				href="/"
 				title="Go to Website Home Page"
